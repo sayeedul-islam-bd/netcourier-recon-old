@@ -14,9 +14,9 @@ Highlights:
 
 A. HOW TO BUILD AND INSTALL
 ---------------------------
-1. Requirements:
-  	a. Java Development Kit (Java SE 8)
-  	b. Apache Maven (3.x)
-  	c. Apache Tomcat (7.x)
-  	d. Git client
+- Requirements:
+  	- Java Development Kit (Java SE 8)
+  	- Apache Maven (3.x)
+  	- Apache Tomcat (7.x)
+  	- Git client
 
