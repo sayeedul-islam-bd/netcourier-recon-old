@@ -1,0 +1,2475 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Supplier Invoice Reconciliation</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="" />
+		<meta name="author" content="" />
+		<!-- Le styles -->
+		<link rel="stylesheet" type="text/css" href="https://cdn.metafour.com/devel/css/metafour-ui.bpe.css">
+		<link rel="stylesheet" type="text/css" href="css/reconcile-invoice.css" />
+	</head>
+
+	<body>
+		<!-- LOAD FOR EXISTING RECORDS -->
+		<div id="headerbaredit" class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span> 
+						<span class="icon-bar"></span> 
+						<span class="icon-bar"></span>
+					</button>
+					<span class="brand"> <img id="logo" src="https://cdn.metafour.com/devel/img/bpe_logo.png" /> 
+						<span id="bookingstatus">a Swiss Post company</span> <span id="navmessage"></span>
+					</span>
+					<div class="nav-collapse collapse">
+						<ul class="nav pull-right">
+							<li><a id="a">Make booking</a></li>
+							<li class="dropdown" id="reportsdropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"> Reports <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a data-loadas="controller" href="#">Controller</a></li>
+									<li><a data-loadas="mybooking" href="mybookinglink.html">My booking</a></li>
+									<li><a data-loadas="reporting" href="reportinglink.html">Reporting</a></li>
+								</ul>
+							</li>
+							<li class="dropdown" id="accountingdropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"> Accounting <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a>Check price</a></li>
+									<li><a>Ready to invoice</a></li>
+									<li><a>Invoiced</a></li>
+									<li><a>Supplier invoices</a></li>
+								</ul>
+							</li>
+							<li><a id="e">Operations</a></li>
+							<li class="dropdown" id="myprofiledropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"> My profile <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a>Profile settings</a></li>
+									<li><a>Log out</a></li>
+								</ul>
+							</li>
+							<li class="dropdown" id="notificationdropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <b class="notificationblob"></b></a>
+								<ul class="dropdown-menu">
+									<li><a><span class="noteheader">
+												<span class="notetype"><i class="icon icon-warning-sign"></i>Alert</span>
+												<span class="notetime">24 mins ago</span>
+											</span>
+											<span class="notedetails"><span>EX0000001 has had an alert added</span></span></a></li>
+									<li><a><span class="noteheader">
+												<span class="notetype"><i class="icon icon-envelope"></i>Email</span>
+												<span class="notetime">1 hour ago</span>
+											</span>
+											<span class="notedetails"><span>JBlizzle420 has sent you an email</span></span></a></li>
+									<li><a><span class="noteheader">
+												<span class="notetype"><i class="icon icon-list"></i>Task</span> 
+												<span class="notetime">2 hours ago</span>
+												<span class="actions"><i class="icon icon-check"></i></span>
+											</span>
+											<span class="notedetails">
+												<span>Job EX0000002: Confirm with the client that the adjusted delivery date is acceptable</span>
+											</span></a></li>
+									<li><a><span class="noteheader">
+												<span class="notetype"><i class="icon icon-envelope"></i>Email</span>
+												<span class="notetime">18 hours ago</span>
+											</span>
+											<span class="notedetails">
+												<span>This is an example of
+													an extensively long email that someone might very well set
+													up the system to send and which we do nothing to prevent
+													because noone thinks about practicality when allowing all
+													these ridiculous set up rules.</span>
+											</span></a></li>
+									<li><a class="allnotifications">See all notifications</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<div class="container" id="container">
+			<header id="overview" class="subhead">
+				<div class="subnav-fixed subnav" id="subnavscroll">
+					<ul class="nav nav-pills">
+						<li><a href="#invoicedetails">Invoice details</a></li>
+						<li><a href="#reconciliationoutcome">Reconciliation outcome</a></li>
+					</ul>
+				</div>
+			</header>
+			<form class="form-horizontal fileupload" id="mainform" action="//jquery-file-upload.appspot.com/" method="POST" enctype="multipart/form-data" data-url="/path/to/upload/handler.json">
+				<section id="invoicedetails">
+					<div class="page-header sectionbartoggle" tabindex="0">
+						<h1>
+							<small><i class="icon-chevron-down"></i>Invoice details</small>
+						</h1>
+					</div>
+					<div class="row anything">
+						<div class="span6">
+							<fieldset>
+								<div class="control-group">
+									<label class="control-label">Supplier:</label>
+									<div class="controls">
+										<div class="input-append">
+											<input id="suppliersearch" name="suppliersearch" type="text"
+												placeholder="Search" autocomplete="off"
+												class="typeahead input-large include"
+												data-search-settings="search2" data-required="required"><span
+												class="add-on"><i class="icon-search"></i></span> <input
+												type="hidden" value="" name="suppliersearchKey"
+												class="typeahead-val">
+										</div>
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="invoiceno" class="control-label">Invoice no:</label>
+									<div class="controls">
+										<input type="text" class="include input-large" id="invoiceno"
+											name="invoiceno" data-valid="integer">
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="invoicedate">Invoice
+										date:</label>
+									<div class="controls">
+										<div class="input-append">
+											<input id="invoicedate"
+												class="input-datesize include con-datepicker" type="text"
+												name="invoicedate" value="Mon, 01-Jan-2014"><span
+												class="add-on"><i class="icon-calendar"></i></span>
+										</div>
+									</div>
+								</div>
+								<!--                                <div class="control-group">
+	                                                                    <label for="currency" class="control-label">Currency:</label>
+	                                                                    <div class="controls">
+	                                                                        <select class="include input-large" id="currency" name="currency">
+	                                                                            <option value="GBP">GBP - Great British Pounds</option>
+	                                                                            <option value="EUR">Eur - Euros</option>
+	                                                                        </select>
+	                                                                    </div>
+	                                                                </div>-->
+								<div class="control-group">
+									<label for="jobsearchmethodradiosinputfile"
+										class="control-label">Job search method:</label>
+									<div class="controls">
+										<label class="radio"> <input
+											id="jobsearchmethodradiosinputfile" checked="checked"
+											type="radio" value="inputfile" name="jobsearchmethodradios"
+											data-clickchangepair="jobsearchmethodradiosinputfile"
+											data-clickchangegroup="jobsearchmethodradios"
+											class="include clickchangetrigger"> Input file
+										</label>
+										<!--      DISABLED BUT MAY BE ADDED IN FUTURE
+	                                        <label class="radio">
+	                                                                                    <input id="jobsearchmethodradiosscan" type="radio" value="scan" name="jobsearchmethodradios" data-clickchangepair="jobsearchmethodradiosscan" data-clickchangegroup="jobsearchmethodradios" class="include clickchangetrigger">
+	                                                                                    Scan invoice
+	                                                                                </label>-->
+										<label class="radio"> <input
+											id="jobsearchmethodradiosjobsearch" type="radio"
+											value="jobsearch" name="jobsearchmethodradios"
+											data-clickchangepair="jobsearchmethodradiosjobsearch"
+											data-clickchangegroup="jobsearchmethodradios"
+											class="include clickchangetrigger"> Job search
+										</label>
+									</div>
+								</div>
+							</fieldset>
+	
+							<fieldset>
+								<!--                                <div class="control-group">
+	                                                                    <label for="jobsearchmethodradiosinputfile" class="control-label">Job search method:</label>
+	                                                                    <div class="controls">
+	                                                                        <label class="radio">
+	                                                                            <input id="jobsearchmethodradiosinputfile" checked="checked" type="radio" value="inputfile" name="jobsearchmethodradios" data-clickchangepair="jobsearchmethodradiosinputfile" data-clickchangegroup="jobsearchmethodradios" class="include clickchangetrigger">
+	                                                                            Input file
+	                                                                        </label>
+	                                                                              DISABLED BUT MAY BE ADDED IN FUTURE
+	                                                                        <label class="radio">
+	                                                                                                                    <input id="jobsearchmethodradiosscan" type="radio" value="scan" name="jobsearchmethodradios" data-clickchangepair="jobsearchmethodradiosscan" data-clickchangegroup="jobsearchmethodradios" class="include clickchangetrigger">
+	                                                                                                                    Scan invoice
+	                                                                                                                </label>
+	                                                                        <label class="radio">
+	                                                                            <input id="jobsearchmethodradiosjobsearch" type="radio" value="jobsearch" name="jobsearchmethodradios" data-clickchangepair="jobsearchmethodradiosjobsearch" data-clickchangegroup="jobsearchmethodradios" class="include clickchangetrigger">
+	                                                                            Job search
+	                                                                        </label>
+	                                                                    </div>
+	                                                                </div>-->
+								<!--                                <div class="control-group">
+	                                                                    <label class="control-label" for="expectedcosts">Expected total cost:</label>
+	                                                                    <div class="controls">
+	                                                                        <input id="expectedcosts" type="text" name="expectedcosts" class="include input-small" data-vaild="positivenumber">
+	                                                                    </div>
+	                                                                </div>-->
+								<div class="control-group "
+									data-clickchangepair="jobsearchmethodradiosinputfile jobsearchmethodradiosscan"
+									data-clickchangegroup="jobsearchmethodradios">
+									<label class="control-label" for="currupp">Acceptable
+										increase in costs:</label>
+									<div class="controls">
+										<div class="input-append inlineappends">
+											<input id="currupp" type="text" name="currupp"
+												class="include input-singlecharacter"
+												data-vaild="positivenumber">
+										</div>
+										<div class="input-append">
+											<select id="curruppformat" name="curruppformat"
+												class="input-singlecharacter include">
+												<option value="%">%</option>
+												<option value=""></option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="control-group "
+									data-clickchangepair="jobsearchmethodradiosinputfile jobsearchmethodradiosscan"
+									data-clickchangegroup="jobsearchmethodradios">
+									<label class="control-label" for="currlow">Acceptable
+										decrease in costs:</label>
+									<div class="controls">
+										<div class="input-append inlineappends">
+											<input id="currlow" type="text" name="currlow"
+												class="include input-singlecharacter"
+												data-vaild="positivenumber">
+										</div>
+										<div class="input-append">
+											<select id="currlowformat" name="currlowformat"
+												class="input-singlecharacter include">
+												<option value="%">%</option>
+												<option value=""></option>
+											</select>
+										</div>
+									</div>
+								</div>
+	
+								<!--                                <div class="control-group nodisplay" data-clickchangepair="jobsearchmethodradiosjobsearch" data-clickchangegroup="jobsearchmethodradios">
+	                                                                    <label class="control-label" for="surcharge">Surcharge:</label>
+	                                                                    <div class="controls">
+	                                                                        <input id="surcharge" type="text" name="surcharge" class="include input-small" data-vaild="number">
+	                                                                    </div>
+	                                                                </div>-->
+								<div class="control-group "
+									data-clickchangepair="jobsearchmethodradiosinputfile jobsearchmethodradiosscan"
+									data-clickchangegroup="jobsearchmethodradios">
+									<label class="control-label" for="podreq">Only match
+										jobs with a PoD?:</label>
+									<div class="controls">
+										<label class="checkbox"> <input id="podreq"
+											type="checkbox" value="Y" name="podreq" class="include">
+										</label>
+									</div>
+								</div>
+								<div class="control-group"
+									data-clickchangepair="jobsearchmethodradiosinputfile jobsearchmethodradiosscan"
+									data-clickchangegroup="jobsearchmethodradios">
+									<label class="control-label" for="autoaddcosts">Overwrite
+										costs to match invoiced value?:</label>
+									<div class="controls">
+										<label class="checkbox"> <input id="autoaddcosts"
+											type="checkbox" value="Y" name="autoaddcosts" class="include">
+										</label>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+						<div class="span6">
+							<div class="alert alert-info" id="presupplieralert">
+								<strong>Please select a supplier</strong><br> We will show
+								the current mapping for your selected supplier here.
+								<button type="button" id="supplierselectfake"
+									class="btn btn-alert">Fake selected a supplier</button>
+							</div>
+							<div class="nodisplay"
+								data-clickchangepair="jobsearchmethodradiosjobsearch"
+								data-clickchangegroup="jobsearchmethodradios">
+								<div class="control-group">
+									<label class="control-label" for="firstjobdate">First
+										job date:</label>
+									<div class="controls">
+										<div class="input-append">
+											<input id="firstjobdate"
+												class="input-datesize include con-startdate" type="text"
+												name="firstjobdate" data-datepair="jobsearchdates"><span
+												class="add-on"><i class="icon-calendar"></i></span>
+										</div>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="lastjobdate">Last job
+										date:</label>
+									<div class="controls">
+										<div class="input-append">
+											<input id="lastjobdate"
+												class="input-datesize include con-enddate" type="text"
+												name="lastjobdate" data-datepair="jobsearchdates"><span
+												class="add-on"><i class="icon-calendar"></i></span>
+										</div>
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="typeradiosinvoice" class="control-label">Type:</label>
+									<div class="controls">
+										<label class="radio"> <input id="typeradiosinvoice"
+											type="radio" value="invoice" name="typeradios" class="include"
+											checked="checked"> Invoice
+										</label> <label class="radio"> <input id="typeradioscredit"
+											type="radio" value="credit" name="typeradios" class="include">
+											Credit
+										</label>
+									</div>
+								</div>
+							</div>
+	
+							<div
+								data-clickchangepair="jobsearchmethodradiosinputfile jobsearchmethodradiosscan"
+								data-clickchangegroup="jobsearchmethodradios">
+								<fieldset>
+									<div class="alert alert-info nodisplay" id="postsupplieralert">
+										<strong>Showing default mapping for Supplier A</strong><br>
+										If you would like to update the default mapping for this
+										supplier, click the "Save as default" button in this box.
+										Otherwise we will treat this as a one off.<br>
+										<button type="button" id="reloadsupplierdefault" class="btn">Reload
+											default</button>
+										<button type="button" id="updatesupplierdefault"
+											class="btn btn-info">Save as default</button>
+									</div>
+									<div class="control-group">
+										<label for="trackingnocolumnstring" class="control-label">Tracking
+											no. column header:</label>
+										<div class="controls">
+											<div class="input-append">
+												<input type="text" class="include input-large"
+													id="trackingnocolumnstring" name="trackingnocolumnstring"
+													data-required="required"><span class="add-on"
+													data-toggle="tooltip"
+													title="The text string in the header of the column containing the 3rd party tracking numbers.">
+													<i class="icon-info-sign"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label" for="vertical">Is it a
+											vertical format?:</label>
+										<div class="controls">
+											<label class="checkbox"> <input id="vertical"
+												type="checkbox" value="Y" name="vertical"
+												class="include checkboxcontrolled">
+											</label>
+										</div>
+									</div>
+									<div class="nodisplay" data-toggledby="vertical">
+										<fieldset>
+											<div class="control-group">
+												<label for="valuenocolumnstring" class="control-label">Value
+													column header:</label>
+												<div class="controls">
+													<div class="input-append">
+														<input type="text" class="include input-large"
+															id="valuenocolumnstring" name="valuenocolumnstring"
+															data-required="required"><span class="add-on"
+															data-toggle="tooltip"
+															title="The text string in the header of the column containing the Net charge values.">
+															<i class="icon-info-sign"></i>
+														</span>
+													</div>
+												</div>
+											</div>
+											<div class="control-group">
+												<label for="descriptioncolumnstring" class="control-label">Description
+													column header:</label>
+												<div class="controls">
+													<div class="input-append">
+														<input type="text" class="include input-large"
+															id="descriptioncolumnstring"
+															name="descriptioncolumnstring" data-required="required"><span
+															class="add-on" data-toggle="tooltip"
+															title="The text string in the header of the column which details which type of charge a row represents.">
+															<i class="icon-info-sign"></i>
+														</span>
+													</div>
+												</div>
+											</div>
+										</fieldset>
+										<div class="alert alert-info">
+											<strong>Don't worry about weight/basic charges</strong><br>
+											We automatically identify these rows for you
+										</div>
+									</div>
+									<div id="suppliermapping" class="nodisplay"
+										data-us-horizontal="System column"
+										data-them-horizontal="Invoice column"
+										data-us-vertical="System charge name"
+										data-them-vertical="Invoice charge name"></div>
+								</fieldset>
+							</div>
+						</div>
+						<div class="span12"
+							data-clickchangepair="jobsearchmethodradiosinputfile jobsearchmethodradiosscan"
+							data-clickchangegroup="jobsearchmethodradios">
+							<fieldset>
+								<div class="control-group">
+									<label class="control-label">Files to check:</label>
+									<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+									<div class="fileupload-buttonbar">
+										<div class="">
+											<!-- The fileinput-button span is used to style the file input field as button -->
+											<div class="btn btn-success fileinput-button">
+												<i class="icon-plus icon-white"></i> <span>Add
+													files...</span> <input type="file" name="files[]" multiple>
+											</div>
+											<span class="fileupload-loading"></span>
+										</div>
+									</div>
+									<!-- The table listing the files available for upload/download -->
+									<table role="presentation" class="table table-striped">
+										<tbody class="files"></tbody>
+									</table>
+								</div>
+							</fieldset>
+						</div>
+						<div class="span12">
+							<fieldset>
+								<button type="button" id="getjobs"
+									class="btn btn-primary pull-right" disabled>Create
+									invoice</button>
+								<button type="button" id="hypotheticalfileformaterror"
+									class="btn pull-right" disabled
+									data-clickchangepair="jobsearchmethodradiosinputfile jobsearchmethodradiosscan"
+									data-clickchangegroup="jobsearchmethodradios">HYPOTHETICAL
+									CSV FORMAT ERROR</button>
+							</fieldset>
+						</div>
+					</div>
+				</section>
+			</form>
+	
+			<!--            NOTE! FOR "INPUT fILE" SEARCH METHOD. IF UPLOADED FILE HAS FORMATTING ERRORS, THIS SECTION SHOULD BE AJAXED IN. TO BE NEW STANDARD RESPONSE FOR BADLY FORMATTED CSV UPLOADS -->
+	
+			<div class='nodisplay' id='uploadfailajax'
+				data-clickchangegroup="jobsearchmethodradios">
+	
+				<div class="page-header sectionbartoggle" tabindex="0">
+					<h1>
+						<small><i class="icon-chevron-down"></i>Upload errors
+							<button id="errortabledownload" class="btn btn-danger pull-right">Download
+								CSV with error highlights</button></small>
+					</h1>
+				</div>
+				<table
+					class="table table-condensed table-striped datatabled table-bordered"
+					id='uploaderrortable'>
+					<thead>
+						<tr>
+							<th data-defaultsort="asc">Line no.</th>
+							<th>Column</th>
+							<th>Reason</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>HAWB</td>
+							<td>HAWB column header could not be found<span
+								class="label label-important">HAWB column must exist and
+									be labelled with "HAWB".</span>
+							</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>Cost</td>
+							<td>Cost of "ABC" is not valid<span
+								class="label label-inverse">Value must be a number</span>
+							</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>HAWB</td>
+							<td>HAWB column header could not be found<span
+								class="label label-important">HAWB column must exist and
+									be labelled with "HAWB".</span>
+							</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>HAWB</td>
+							<td>HAWB column header could not be found<span
+								class="label label-important">HAWB column must exist and
+									be labelled with "HAWB".</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<!--                                    <button id="errortabledownload" class="btn btn-danger  pull-right">Download CSV with error highlights</button>-->
+			</div>
+	
+			<!--            NOTE! FINAL SCREEN SHOULD AJAX IN ONE OF THESE 2 DIVS. THEY ARE BOTH SHOWN HERE FOR MARK UP AND DEMO PURPOSES. THE REAL PRODUCT WILL ONLY LOAD THE DIV THAT SUPPORTS THE METHOD OF JOB SEARCHING SELECTED!!!-->
+	
+			<!--            NOTE! AJAX THIS DIV IN IF THE USER SELECTS TO DO A MANUAL JOB SEARCH-->
+			<div id="jobsearchajaxsection" class="nodisplay">
+				<section id="reconciliationoutcome">
+					<div class="page-header sectionbartoggle" tabindex="0">
+						<h1>
+							<small><i class="icon-chevron-down"></i>Reconciliation
+								outcome</small>
+						</h1>
+					</div>
+					<div class="row anything">
+						<div class="span12">
+							<fieldset>
+								<div class="invtotals">
+									<h3>Invoice totals</h3>
+									<div class="importanttotals">
+										<span class="totalcontainer"><span
+											class="expectedtotalgrosslabel">Expected total:</span> <span
+											class="expectedgross">€2000.00</span></span> <span
+											class="totalcontainer"><span class="totalgrosslabel">Gross
+												total:</span> <span class="totalgross">€2000.00</span></span> <span
+											class="totalcontainer"><span
+											class="totalreconciledlabel">Reconciled total:</span> <span
+											class="totalreconciled">€0.00</span></span>
+									</div>
+									<div class="othertotals">
+										<span class="totalcontainer"><span class="totalnetlabel">Net
+												total:</span> <span class="totalnet">€1600.00</span></span> <span
+											class="totalcontainer"><span class="totaltaxlabel">Total
+												tax:</span> <span class="totaltax">€400.00</span></span> <span
+											class="totalcontainer"><span class="totalfuellabel">Total
+												fuel surcharge:</span> <span class="totalfuel">€200.21</span></span>
+									</div>
+									<div class="othertotals">
+										<span class="totalcontainer"><span
+											class="totaljobslabel">Total jobs:</span> <span
+											class="totaljobs">204</span></span> <span class="totalcontainer"><span
+											class="totalweightlabel">Total weight:</span> <span
+											class="totalweight">500kg</span></span>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+						<div class="span12">
+							<form class="form-horizontal">
+								<div class="control-group">
+									<label class="control-label">Search for additional jobs:</label>
+									<div class="controls">
+										<div class="input-append">
+											<input id="additionaljobsearch" name="additionaljobsearch"
+												type="text" placeholder="Search" autocomplete="off"
+												class="typeahead input-large include"
+												data-search-settings="search2" data-required="required"><span
+												class="add-on"><i class="icon-search"></i></span> <input
+												type="hidden" value="" name="additionaljobsearchKey"
+												class="typeahead-val">
+										</div>
+									</div>
+								</div>
+								<table
+									class="datatabled table-condensed table table-striped invoicetables"
+									id="invoicejobs" width="100%" data-datatablescroll="Y"
+									data-fixright="3">
+									<thead>
+										<tr>
+											<th data-datasort="Y">Booking date</th>
+											<th>HAWB</th>
+											<th>Client</th>
+											<th>Pickup</th>
+											<th>Destination</th>
+											<th>Weight</th>
+											<th>Sale price (GBP)</th>
+											<th>Profit %</th>
+											<th>Cost pre surcharge</th>
+											<th>Cost(GBP)</th>
+											<th data-defaultsort="desc">3rd party ref</th>
+											<th>Cost (EUR)</th>
+											<th><button id="reconcilecosts"
+													class="btn btn-success pull-right">Reconcile all</button></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140102">Tue,
+													02-Jan-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140102">Tue,
+													02-Jan-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140102">Tue,
+													02-Jan-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140102">Tue,
+													02-Jan-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140102">Tue,
+													02-Jan-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140102">Tue,
+													02-Jan-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140102">Tue,
+													02-Jan-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140102">Tue,
+													02-Jan-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+										<tr>
+											<td><span data-sort-value="20140102">Tue,
+													02-Jan-2014</span></td>
+											<td><span>HAWB</span></td>
+											<td><span>Client</span></td>
+											<td><span>Pickup</span></td>
+											<td><span>Destination</span></td>
+											<td><span>Weight</span></td>
+											<td><span>Sale price (GBP)</span></td>
+											<td><span>Profit %</span></td>
+											<td><span>Cost pre surcharge</span></td>
+											<td><span>Cost(GBP)</span></td>
+											<td><span>3rd party ref</span></td>
+											<td><span>Cost (EUR)</span></td>
+											<td><span class="buttoncell">
+													<button class="btn confirmmatch">
+														<i class="icon icon-check"></i>
+													</button>
+													<button class="btn track" data-toggle="modal"
+														data-target="#invrecmodal">
+														<i class="icon icon-pencil"></i>
+													</button>
+											</span></td>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<td class="searchable">Tue, 02-Jan-2014</td>
+											<td class="searchable">3rd party ref</td>
+											<td class="searchable">Client</td>
+											<td class="searchable">Pickup</td>
+											<td class="searchable">Destination</td>
+											<td class="searchable">Weight</td>
+											<td><span class="actionfiller"></span></td>
+											<td><span class="actionfiller"></span></td>
+											<td><span class="actionfiller"></span></td>
+											<td><span class="actionfiller"></span></td>
+											<td class="searchable">HAWB</td>
+											<td><span class="actionfiller"></span></td>
+											<td><span class="actionfiller"></span></td>
+										</tr>
+									</tfoot>
+								</table>
+							</form>
+							<div class='pull-right pageconfirmbuttonholder'>
+								<button id="lockjobs" class="btn btn-primary pull-right">Lock
+									manifest</button>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+	
+			<!--NOTE! AJAX THIS DIV IN IF THE USER HAS UPLOADED A FILE AND THE SYSTEM HAS RUN ON THEIR CSV-->
+			<div id="inputfileajaxsection" class="nodisplay">
+				<section id="reconciliationoutcome">
+					<div class="page-header sectionbartoggle" tabindex="0">
+						<h1>
+							<small><i class="icon-chevron-down"></i>Reconciliation
+								outcome</small>
+						</h1>
+					</div>
+					<div class="row anything">
+						<div class="span12">
+							<fieldset>
+								<div class="invtotals">
+									<h3>Invoice totals</h3>
+									<div class="importanttotals">
+										<span class="totalcontainer"><span
+											class="expectedtotalgrosslabel">Expected total:</span> <span
+											class="expectedgross">€2000.00</span></span> <span
+											class="totalcontainer"><span class="totalgrosslabel">Gross
+												total:</span> <span class="totalgross">€2000.00</span></span> <span
+											class="totalcontainer"><span
+											class="totalreconciledlabel">Reconciled total:</span> <span
+											class="totalreconciled">€1234.56</span></span>
+									</div>
+									<div class="othertotals">
+										<span class="totalcontainer"><span class="totalnetlabel">Net
+												total:</span> <span class="totalnet">€1600.00</span></span> <span
+											class="totalcontainer"><span class="totaltaxlabel">Total
+												tax:</span> <span class="totaltax">€400.00</span></span> <span
+											class="totalcontainer"><span class="totalfuellabel">Total
+												fuel surcharge:</span> <span class="totalfuel">€200.21</span></span>
+									</div>
+									<div class="othertotals">
+										<span class="totalcontainer"><span
+											class="totaljobslabel">Total jobs:</span> <span
+											class="totaljobs">204</span></span> <span class="totalcontainer"><span
+											class="totalweightlabel">Total weight:</span> <span
+											class="totalweight">500kg</span></span>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+						<div class="span12">
+							<ul class="nav nav-tabs" id="myTab">
+								<li><a href="#matches" data-toggle="tab">Reconciled
+										(200)</a></li>
+								<li class="active"><a href="#errors" data-toggle="tab">Errors
+										(4)</a></li>
+							</ul>
+	
+							<div class="tab-content">
+								<div class="tab-pane" id="matches">
+									<form class="form-horizontal">
+	
+										<table
+											class="datatabled table-condensed table table-striped invoicetables"
+											id="invmatches" width="100%" data-datatablescroll="Y"
+											data-fixright="3">
+											<thead>
+												<tr>
+													<th data-datasort="Y">Booking date</th>
+													<th>HAWB</th>
+													<th>Client</th>
+													<th>Pickup</th>
+													<th>Destination</th>
+													<th>Weight</th>
+													<th>Sale price (GBP)</th>
+													<th>Profit %</th>
+													<th>Cost pre surcharge</th>
+													<th>Cost(GBP)</th>
+													<th data-defaultsort="desc">3rd party ref</th>
+													<th>Cost (EUR)</th>
+													<th><button id="reconcilecosts"
+															class="btn btn-success pull-right">Reconcile all</button></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="success">
+													<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140102">Tue,
+															02-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140102">Tue,
+															02-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140102">Tue,
+															02-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140102">Tue,
+															02-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140102">Tue,
+															02-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140102">Tue,
+															02-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140102">Tue,
+															02-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140102">Tue,
+															02-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr class="success">
+													<td><span data-sort-value="20140102">Tue,
+															02-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>Cost (EUR)</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+											</tbody>
+											<tfoot>
+												<tr>
+													<td class="searchable">Tue, 02-Jan-2014</td>
+													<td class="searchable">3rd party ref</td>
+													<td class="searchable">Client</td>
+													<td class="searchable">Pickup</td>
+													<td class="searchable">Destination</td>
+													<td class="searchable">Weight</td>
+													<td><span class="actionfiller"></span></td>
+													<td><span class="actionfiller"></span></td>
+													<td><span class="actionfiller"></span></td>
+													<td><span class="actionfiller"></span></td>
+													<td class="searchable">HAWB</td>
+													<td><span class="actionfiller"></span></td>
+													<td><span class="actionfiller"></span></td>
+												</tr>
+											</tfoot>
+										</table>
+									</form>
+								</div>
+								<div class="tab-pane active" id="errors">
+									<form class="form-horizontal">
+										<div class="control-group">
+											<label class="control-label">Search for additional
+												jobs:</label>
+											<div class="controls">
+												<div class="input-append">
+													<input id="additionaljobsearch" name="additionaljobsearch"
+														type="text" placeholder="Search" autocomplete="off"
+														class="typeahead input-large include"
+														data-search-settings="search2" data-required="required"><span
+														class="add-on"><i class="icon-search"></i></span> <input
+														type="hidden" value="" name="additionaljobsearchKey"
+														class="typeahead-val">
+												</div>
+											</div>
+										</div>
+										<table
+											class="datatabled table-condensed table table-striped invoicetables"
+											id="inverror" width="100%" data-fixright="3"
+											data-datatablescroll="Y">
+											<thead>
+												<tr>
+													<th data-datasort="Y">Booking date</th>
+													<th>HAWB</th>
+													<th>Client</th>
+													<th>Pickup</th>
+													<th>Destination</th>
+													<th>Weight</th>
+													<th>Sale price (GBP)</th>
+													<th>Profit %</th>
+													<th>Cost pre surcharge</th>
+													<th>Cost(GBP)</th>
+													<th data-defaultsort="desc">3rd party ref</th>
+													<th>Cost (EUR)</th>
+													<th><button class="btn btn-success pull-right">Select
+															all</button></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="error">
+													<td><span class="errottablehighlight"
+														data-sort-value="01">Job not found</span></td>
+													<td><span class="errottablehighlight">Job not
+															found</span></td>
+													<td><span class="errottablehighlight">Job not
+															found</span></td>
+													<td><span class="errottablehighlight">Job not
+															found</span></td>
+													<td><span class="errottablehighlight">Job not
+															found</span></td>
+													<td><span class="errottablehighlight">Job not
+															found</span></td>
+													<td><span class="errottablehighlight">Job not
+															found</span></td>
+													<td><span class="errottablehighlight">Job not
+															found</span></td>
+													<td><span class="errottablehighlight">Job not
+															found</span></td>
+													<td><span class="errottablehighlight">Job not
+															found</span></td>
+													<td><span>ABC000001 (On invoice)</span><span
+														class="errottablehighlight">Job not found</span></td>
+													<td><span>€123.45 (On invoice)</span><span
+														class="errottablehighlight">Job not found</span></td>
+													<td><span class="errottablehighlight">Job not
+															found</span></td>
+												</tr>
+												<tr>
+													<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>€0.00</span><span class="errottablehighlight">No
+															costs found</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+												<tr>
+													<td><span data-sort-value="20140102">Tue,
+															02-Jan-2014</span></td>
+													<td><span>HAWB</span></td>
+													<td><span>Client</span></td>
+													<td><span>Pickup</span></td>
+													<td><span>Destination</span></td>
+													<td><span>Weight</span></td>
+													<td><span>Sale price (GBP)</span></td>
+													<td><span>Profit %</span></td>
+													<td><span>Cost pre surcharge</span></td>
+													<td><span>Cost(GBP)</span></td>
+													<td><span>3rd party ref</span></td>
+													<td><span>€20.00</span><span
+														class="errottablehighlight">Costs don't match</span></td>
+													<td><span class="buttoncell">
+															<button class="btn confirmmatch">
+																<i class="icon icon-check"></i>
+															</button>
+															<button class="btn track" data-toggle="modal"
+																data-target="#invrecmodal">
+																<i class="icon icon-pencil"></i>
+															</button>
+													</span></td>
+												</tr>
+											</tbody>
+											<tfoot>
+												<tr>
+													<td class="searchable">Tue, 02-Jan-2014</td>
+													<td class="searchable">3rd party ref</td>
+													<td class="searchable">Client</td>
+													<td class="searchable">Pickup</td>
+													<td class="searchable">Destination</td>
+													<td class="searchable">Weight</td>
+													<td><span class="actionfiller"></span></td>
+													<td><span class="actionfiller"></span></td>
+													<td><span class="actionfiller"></span></td>
+													<td><span class="actionfiller"></span></td>
+													<td class="searchable">HAWB</td>
+													<td><span class="actionfiller"></span></td>
+													<td><span class="actionfiller"></span></td>
+												</tr>
+											</tfoot>
+										</table>
+									</form>
+								</div>
+							</div>
+							<div class='pull-right pageconfirmbuttonholder'>
+								<button id="lockjobs" class="btn btn-primary pull-right">Lock manifest</button>
+								<button id="downloadcsv" class="btn pull-right">Download as CSV</button>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	<div id="loadingmask2">
+		<div id="loadingdots">
+			<div id="loadingdots_1" class="loadingdots"></div>
+			<div id="loadingdots_2" class="loadingdots"></div>
+			<div id="loadingdots_3" class="loadingdots"></div>
+		</div>
+	</div>
+
+
+	<div class="modal nodisplay" id="invrecmodal" tabindex="-1"
+		role="dialog" aria-hidden="true" data-backdrop="static"
+		data-keyboard="false">
+		<div class="modal-header">
+			<h3 class="modallabel">Cost details</h3>
+		</div>
+		<div class="modal-body row">
+			<form class="form-horizontal span12">
+				<section>
+					<div class="row anything">
+						<div class="span6">
+							<fieldset>
+								<div class="control-group">
+									<label class="control-label">3rd party ref.:</label>
+									<div class="controls">
+										<span id="3rdpartyref">1MPORTANTC0DE</span>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">HAWB:</label>
+									<div class="controls">
+										<span id="hawb">EX00000000001</span>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Client:</label>
+									<div class="controls">
+										<span id="hawb">ACME Inc.</span>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Client code:</label>
+									<div class="controls">
+										<span id="hawb">ACME1NC</span>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Booking date/time:</label>
+									<div class="controls">
+										<span id="bookingdatetime"><span id="bookingdate">Mon,
+												01-Jan-2014</span> @ <span id="bookingtime">01:23</span></span>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Destination:</label>
+									<div class="controls">
+										<span id="destination">Somewhere</span>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Contents type:</label>
+									<div class="controls">
+										<span id="contentype">Non-documents</span>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Value:</label>
+									<div class="controls">
+										<span id="value">€200.00</span>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+						<div class="span6">
+							<fieldset>
+								<div class="control-group">
+									<label class="control-label">Invoice amount:</label>
+									<div class="controls">
+										<span class="invoiceamount">€23.00</span>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Sales price:</label>
+									<div class="controls">
+										<span class="salesprice">€55.00</span>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Invoice amount:</label>
+									<div class="controls">
+										<span class="costprice">€23.00</span>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Profit:</label>
+									<div class="controls">
+										<span class="profit">€32.00 (58.18%)</span>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Invoices accepted:</label>
+									<div class="controls">
+										<span class="invoiceaccepted">€0.00</span>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Invoice amount:</label>
+									<div class="controls">
+										<span class="invoiceexpected">€23.00</span>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">No. items:</label>
+									<div class="controls">
+										<span id="3rdpartyref">1</span>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Dead weight:</label>
+									<div class="controls">
+										<span id="3rdpartyref">20kg</span>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Volumetric weight:</label>
+									<div class="controls">
+										<span id="3rdpartyref">30kg</span>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="page-header sectionbartoggle" tabindex="0">
+						<h1>
+							<small><i class="icon-chevron-down"></i>Pricing lines</small>
+						</h1>
+					</div>
+					<div class="row anything">
+						<div class="span12">
+							<table class="table-condensed table table-striped datatabled"
+								id="pricelinetable">
+								<thead>
+									<tr>
+										<th>Supplier</th>
+										<th>Invoice no.</th>
+										<th>Leg code</th>
+										<th>Description</th>
+										<th>No. units</th>
+										<th>Unit cost</th>
+										<th>Total cost</th>
+										<th width="50px"><button
+												class="addnewrow btn btn-mini-icon pull-right include"
+												id="pricelinetablerownew">
+												<i class="icon-plus"></i>
+											</button></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><span class="supplier">DHL</span></td>
+										<td><span class="invoiceno">123456789</span></td>
+										<td><span class="legcode">DHLLEG1</span></td>
+										<td><textarea name="priceline1desc"
+												data-required="required" disabled
+												class="invoicedesc input-large">This is an example description for DHL1</textarea>
+										</td>
+										<td><input type="text" name="priceline1unitno" disabled
+											class="input-small invoiceunitno" data-required="required"
+											data-valid="integer" value="3"></td>
+										<td><input type="text" name="priceline1unitcost" disabled
+											class="input-small invoiceunitcost" data-required="required"
+											data-valid="number" value="25.00"></td>
+										<td><span class="totalcost">€50.00</span></td>
+										<td>
+											<button class="btn btn-mini-icon pull-right flagforapproval">
+												<i class="icon-exclamation-sign"></i>
+											</button>
+											<button class="btn btn-mini-icon pull-right confirmmatch">
+												<i class="icon-check"></i>
+											</button>
+											<button class="btn btn-mini-icon pull-right">
+												<i class="icon-ban-circle"></i>
+											</button>
+											<button class="edittable btn btn-mini-icon pull-right">
+												<i class="icon-pencil"></i>
+											</button>
+											<button
+												class="locktable btn btn-mini-icon pull-right nodisplay">
+												<i class="icon-remove"></i>
+											</button>
+											<button class="submit btn btn-mini-icon pull-right nodisplay"
+												data-submit-settings="table1submit">
+												<i class="icon-ok"></i>
+											</button>
+										</td>
+									</tr>
+									<tr class="disabled">
+										<td><span class="supplier">FEDEX</span></td>
+										<td><span class="invoiceno">123456789</span></td>
+										<td><span class="legcode">FEDEX1</span></td>
+										<td><span class="invoicedesc">Description of
+												FEDEX1, uneditable because this is a DHL invoice</span></td>
+										<td><span class="invoiceunitno">1</span></td>
+										<td><span class="invoiceunitcost">€20.00</span></td>
+										<td><span class="totalcost">€20.00</span></td>
+										<td></td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr
+										class="nodisplay pricelinetablerownew pricelinetablerownewhidden">
+										<td><span class="supplier">DHL</span></td>
+										<td><span class="invoiceno">123456789</span></td>
+										<td><span class="legcode">DHLLEG1</span></td>
+										<td><textarea name="priceline1desc"
+												data-required="required" class="invoicedesc input-large"></textarea>
+										</td>
+										<td><input type="text" name="priceline1unitno"
+											class="input-small invoiceunitno" data-required="required"
+											data-valid="integer" value=""></td>
+										<td><input type="text" name="priceline1unitcost"
+											class="input-small invoiceunitcost" data-required="required"
+											data-valid="number" value=""></td>
+										<td><span class="totalcost"></span></td>
+										<td>
+											<button class="hidenewrow btn btn-mini-icon pull-right">
+												<i class="icon-remove"></i>
+											</button>
+											<button class="submit btn btn-mini-icon pull-right"
+												data-submit-settings="table1submit">
+												<i class="icon-ok"></i>
+											</button>
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</section>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button class="btn modalclose" data-firewarning="" aria-hidden="true">Close</button>
+		</div>
+	</div>
+	<!-- The template to display files available for upload -->
+	<script id="template-upload" type="text/x-tmpl">
+            {% for (var i=0, file; file=o.files[i]; i++) { %}
+            <tr class="template-upload fade">
+            <td>
+            <span class="preview"></span>
+            </td>
+            <td>
+            <p class="name">{%=file.name%}</p>
+            {% if (file.error) { %}
+            <div><span class="label label-important">Error</span> {%=file.error%}</div>
+            {% } %}
+            </td>
+            <td>
+            <p class="size">{%=o.formatFileSize(file.size)%}</p>
+            {% if (!o.files.error) { %}
+            <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
+            {% } %}
+            </td>
+            <td>
+            {% if (!o.files.error && !i && !o.options.autoUpload) { %}
+            <button class="btn btn-primary start">
+            <i class="icon-upload icon-white"></i>
+            <span>Start</span>
+            </button>
+            {% } %}
+            {% if (!i) { %}
+            <button class="btn btn-warning cancel">
+            <i class="icon-ban-circle icon-white"></i>
+            <span>Cancel</span>
+            </button>
+            {% } %}
+            </td>
+            </tr>
+            {% } %}
+        </script>
+	<!-- The template to display files available for download -->
+	<script id="template-download" type="text/x-tmpl">
+            {% for (var i=0, file; file=o.files[i]; i++) { %}
+            <tr class="template-download fade">
+            <td>
+            <span class="preview">
+            {% if (file.thumbnailUrl) { %}
+            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+            {% } %}
+            </span>
+            </td>
+            <td>
+            <p class="name">
+            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+            </p>
+            {% if (file.error) { %}
+            <div><span class="label label-important">Error</span> {%=file.error%}</div>
+            {% } %}
+            </td>
+            <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+            </td>
+            <td>
+            <button class="btn btn-danger delete deleteuploaditem" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+            <i class="icon-trash icon-white"></i>
+            <span>Delete</span>
+            </button>
+            <input type="checkbox" name="delete" value="1" class="toggle">
+            </td>
+            </tr>
+            {% } %}
+        </script>
+	<script src="https://cdn.metafour.com/devel/js/jquery.min.js"></script>
+	<script src="https://cdn.metafour.com/devel/js/jquery-ui.min.js"></script>
+	<script src="https://cdn.metafour.com/devel/js/bootstrap.min.js"></script>
+	<script src="https://cdn.metafour.com/devel/js/wysihtml5.min.js"></script>
+	<script src="https://cdn.metafour.com/devel/js/bootstrap-datepicker.min.js"></script>
+	<script src="https://cdn.metafour.com/devel/js/jquery.validate.min.js"></script>
+	<script src="https://cdn.metafour.com/devel/js/moment.min.js"></script>
+	<script src="https://cdn.metafour.com/devel/js/jquery.multiselect.min.js"></script>
+	<script src="https://cdn.metafour.com/devel/js/jquery.multiselect.filter.min.js"></script>
+	<script src="https://cdn.metafour.com/devel/js/jquery.scrollTo.min.js"></script>
+	<script src="https://cdn.metafour.com/devel/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.metafour.com/devel/js/bootstrap-datepicker.min.js"></script>
+	<script src="https://cdn.metafour.com/devel/js/bootstrap-wysihtml5.min.js"></script>
+	<script src="https://cdn.metafour.com/devel/js/file-uploader.min.js"></script>
+	<script src="assets/js/dataTables.fixedColumns.min.js"></script>
+	<script src="pageassets/js/invrec_editviewmodecallback.js"></script>
+	<script src="pageassets/js/invrec_config.js"></script>
+	<script src="https://cdn.metafour.com/devel/js/metafour-ui.js"></script>
+	<script src="pageassets/js/invrec.js"></script>
+
+	<script>
+		(window.jQuery);
+		$(document).ready(function() {
+			setvalidator();
+			metaboot($('body'));
+			addvalidation($('body'));
+		});
+	</script>
+
+	<!-- END Timeline Embed-->
+</body>
+</html>
