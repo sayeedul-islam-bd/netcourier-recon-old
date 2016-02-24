@@ -1,99 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="utf-8" />
 		<title>Supplier Invoice Reconciliation</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="description" content="" />
+		<meta name="description" content="NetCourier Supplier Invoice Reconciliation" />
 		<meta name="author" content="" />
-		<!-- Le styles -->
-		<link rel="stylesheet" type="text/css" href="https://cdn.metafour.com/devel/css/metafour-ui.bpe.css">
+		
+		<meta th:remove="tag" th:include="commons :: metafour-ui-css" ></meta>		
 		<link rel="stylesheet" type="text/css" href="css/reconcile-invoice.css" />
+		
+		<meta th:remove="tag" th:include="commons :: common-js" ></meta>	
+		
 	</head>
 
-	<body>
+	<body data-spy="scroll" data-target="#subnavscroll">
 		<!-- LOAD FOR EXISTING RECORDS -->
-		<div id="headerbaredit" class="navbar navbar-fixed-top">
-			<div class="navbar-inner">
-				<div class="container">
-					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-						<span class="icon-bar"></span> 
-						<span class="icon-bar"></span> 
-						<span class="icon-bar"></span>
-					</button>
-					<span class="brand"> <img id="logo" src="https://cdn.metafour.com/devel/img/bpe_logo.png" /> 
-						<span id="bookingstatus">a Swiss Post company</span> <span id="navmessage"></span>
-					</span>
-					<div class="nav-collapse collapse">
-						<ul class="nav pull-right">
-							<li><a id="a">Make booking</a></li>
-							<li class="dropdown" id="reportsdropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown"> Reports <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a data-loadas="controller" href="#">Controller</a></li>
-									<li><a data-loadas="mybooking" href="mybookinglink.html">My booking</a></li>
-									<li><a data-loadas="reporting" href="reportinglink.html">Reporting</a></li>
-								</ul>
-							</li>
-							<li class="dropdown" id="accountingdropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown"> Accounting <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a>Check price</a></li>
-									<li><a>Ready to invoice</a></li>
-									<li><a>Invoiced</a></li>
-									<li><a>Supplier invoices</a></li>
-								</ul>
-							</li>
-							<li><a id="e">Operations</a></li>
-							<li class="dropdown" id="myprofiledropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown"> My profile <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a>Profile settings</a></li>
-									<li><a>Log out</a></li>
-								</ul>
-							</li>
-							<li class="dropdown" id="notificationdropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <b class="notificationblob"></b></a>
-								<ul class="dropdown-menu">
-									<li><a><span class="noteheader">
-												<span class="notetype"><i class="icon icon-warning-sign"></i>Alert</span>
-												<span class="notetime">24 mins ago</span>
-											</span>
-											<span class="notedetails"><span>EX0000001 has had an alert added</span></span></a></li>
-									<li><a><span class="noteheader">
-												<span class="notetype"><i class="icon icon-envelope"></i>Email</span>
-												<span class="notetime">1 hour ago</span>
-											</span>
-											<span class="notedetails"><span>JBlizzle420 has sent you an email</span></span></a></li>
-									<li><a><span class="noteheader">
-												<span class="notetype"><i class="icon icon-list"></i>Task</span> 
-												<span class="notetime">2 hours ago</span>
-												<span class="actions"><i class="icon icon-check"></i></span>
-											</span>
-											<span class="notedetails">
-												<span>Job EX0000002: Confirm with the client that the adjusted delivery date is acceptable</span>
-											</span></a></li>
-									<li><a><span class="noteheader">
-												<span class="notetype"><i class="icon icon-envelope"></i>Email</span>
-												<span class="notetime">18 hours ago</span>
-											</span>
-											<span class="notedetails">
-												<span>This is an example of
-													an extensively long email that someone might very well set
-													up the system to send and which we do nothing to prevent
-													because noone thinks about practicality when allowing all
-													these ridiculous set up rules.</span>
-											</span></a></li>
-									<li><a class="allnotifications">See all notifications</a></li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	
+		<nav class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container show-modal">
+                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <span th:remove="tag" th:include="commons :: client-logo" ></span>
+                    <div th:include="menu :: menu"></div>
+                </div>
+            </div>
+        </nav>
+
 		<div class="container" id="container">
+			
 			<header id="overview" class="subhead">
 				<div class="subnav-fixed subnav" id="subnavscroll">
 					<ul class="nav nav-pills">
@@ -102,6 +40,7 @@
 					</ul>
 				</div>
 			</header>
+			
 			<form class="form-horizontal fileupload" id="mainform" action="//jquery-file-upload.appspot.com/" method="POST" enctype="multipart/form-data" data-url="/path/to/upload/handler.json">
 				<section id="invoicedetails">
 					<div class="page-header sectionbartoggle" tabindex="0">
@@ -2441,7 +2380,7 @@
             </tr>
             {% } %}
         </script>
-	<script src="https://cdn.metafour.com/devel/js/jquery.min.js"></script>
+	<!-- <script src="https://cdn.metafour.com/devel/js/jquery.min.js"></script>
 	<script src="https://cdn.metafour.com/devel/js/jquery-ui.min.js"></script>
 	<script src="https://cdn.metafour.com/devel/js/bootstrap.min.js"></script>
 	<script src="https://cdn.metafour.com/devel/js/wysihtml5.min.js"></script>
@@ -2454,12 +2393,14 @@
 	<script src="https://cdn.metafour.com/devel/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.metafour.com/devel/js/bootstrap-datepicker.min.js"></script>
 	<script src="https://cdn.metafour.com/devel/js/bootstrap-wysihtml5.min.js"></script>
-	<script src="https://cdn.metafour.com/devel/js/file-uploader.min.js"></script>
-	<script src="assets/js/dataTables.fixedColumns.min.js"></script>
-	<script src="pageassets/js/invrec_editviewmodecallback.js"></script>
-	<script src="pageassets/js/invrec_config.js"></script>
-	<script src="https://cdn.metafour.com/devel/js/metafour-ui.js"></script>
-	<script src="pageassets/js/invrec.js"></script>
+	<script src="https://cdn.metafour.com/devel/js/file-uploader.min.js"></script> -->
+	
+	<script src="js/dataTables.fixedColumns.min.js"></script>
+	<!-- <script src="pageassets/js/invrec_editviewmodecallback.js"></script>
+	<script src="pageassets/js/invrec_config.js"></script> -->
+<!-- 	<script src="https://cdn.metafour.com/devel/js/metafour-ui.js"></script> -->	
+	<span th:remove="tag" th:include="commons :: metafour-ui-js" ></span>	
+	<script src="js/invrec.js"></script>
 
 	<script>
 		(window.jQuery);
