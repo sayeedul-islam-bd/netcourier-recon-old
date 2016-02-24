@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>netcourier-invoice-reconciliation</groupId>
-	<artifactId>netcourier-invoice-reconciliation</artifactId>
+	<groupId>netcourier-recon</groupId>
+	<artifactId>netcourier-recon</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
@@ -16,13 +16,7 @@
 			<artifactId>metafour-commons</artifactId>
 			<version>1.0.2</version>
 		</dependency>
-		
-		<!-- spring -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-		</dependency>
-		
+
 		<!-- Test -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -46,7 +40,7 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -65,8 +59,8 @@
 		</dependency>
 
 	</dependencies>
-	
-	
+
+
 	<developers>
 		<developer>
 			<id>sayeed</id>
@@ -81,7 +75,7 @@
 	<scm>
 		<connection>scm:git:https://github.com/Metafour-Int/${project.artifactId}.git</connection>
 		<developerConnection>scm:git:https://github.com/Metafour-Int/${project.artifactId}.git</developerConnection>
-		<url>https://github.com/Metafour-Int/${project.artifactId}</url>
+		<url>https://github.com/Metafour-Int/netcourier-recon</url>
 	</scm>
 	<issueManagement>
 		<system>Bugzilla</system>
