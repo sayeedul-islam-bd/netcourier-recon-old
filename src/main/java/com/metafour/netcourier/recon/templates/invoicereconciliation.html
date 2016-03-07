@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Supplier Invoice Reconciliation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="NetCourier Supplier Invoice Reconciliation" />
+    <meta name="author" content="" />
+
+    <meta th:remove="tag" th:include="commons :: metafour-ui-css"></meta>
+    <link rel="stylesheet" type="text/css" href="css/invoicereconciliation.css" th:href="@{/resources/css/reconcileinvoice/invoicereconciliation.css}"/>
+
+    <meta th:remove="tag" th:include="commons :: common-js"></meta>
+
+</head>
+
+<body data-spy="scroll" data-target="#subnavscroll">
+    <!-- LOAD FOR EXISTING RECORDS -->
+    <nav class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container show-modal">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <span th:remove="tag" th:include="commons :: client-logo"></span>
+                <div th:include="menu :: menu"></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" id="container">
+        <header id="overview" class="subhead">
+            <div class="subnav-fixed subnav" id="subnavscroll">
+                <ul class="nav nav-pills">
+                    <li>
+                    	<a href="#invoicedetails-section" th:text="#{supplierinvoice.details.label}">Invoice details</a>
+                    </li>
+                    <li>
+                    	<a href="#invoicelines-section" th:text="#{supplierinvoice.outcome.label}">Reconciliation outcome</a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+
+        <form class="form-horizontal fileupload" th:object="${purchaseInvoice}" id="mainform" th:action="@{'/supplierinvoice/save'}" method="POST" enctype="multipart/form-data" data-url="/path/to/upload/handler.json">
+        	<input type="hidden" th:field="*{id}" />
+        	        	
+        	<!-- Invoice details section -->
+            <section id="invoicedetails-section" th:include="invoicedetails :: invoice-details-section"></section>            
+        </form><p/>
+
+        <!-- CSV UPLOADS ERRORS -->
+       	<section id="invoiceuploaderror-section" class='nodisplay'  data-clickchangegroup="jobsearchmethodradios" th:include="invoiceuploaderror :: invoice-upload-error"></section>
+
+		<!-- reconcile with job search -->
+        <div id="jobsearchajaxsection" class="nodisplay">
+            <section id="invoicelines-section" th:include="invoicelines_jobsearch :: invoice-lines-section"></section>
+        </div>
+
+        <!-- reconcile with file upload -->
+        <div id="inputfileajaxsection" class="">
+        	<section id="invoicelines-section" th:include="invoicelines_inputfile :: invoice-lines-section"></section>
+            
+        </div>
+    </div>
+    
+    <!-- loading mask 2 -->
+    <div th:remove="tag" th:replace="commons :: loadingmask_2"></div>
+
+    <div class="modal nodisplay" id="invrecmodal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-header">
+            <h3 class="modallabel">Cost details</h3>
+        </div>
+        <div class="modal-body row">
+            <form class="form-horizontal span12">
+                <section>
+                    <div class="row anything">
+                        <div class="span6">
+                            <fieldset>
+                                <div class="control-group">
+                                    <label class="control-label">3rd party ref.:</label>
+                                    <div class="controls">
+                                        <span id="3rdpartyref">1MPORTANTC0DE</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">HAWB:</label>
+                                    <div class="controls">
+                                        <span id="hawb">EX00000000001</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Client:</label>
+                                    <div class="controls">
+                                        <span id="hawb">ACME Inc.</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Client code:</label>
+                                    <div class="controls">
+                                        <span id="hawb">ACME1NC</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Booking date/time:</label>
+                                    <div class="controls">
+                                        <span id="bookingdatetime"><span id="bookingdate">Mon,
+												01-Jan-2014</span> @ <span id="bookingtime">01:23</span></span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Destination:</label>
+                                    <div class="controls">
+                                        <span id="destination">Somewhere</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Contents type:</label>
+                                    <div class="controls">
+                                        <span id="contentype">Non-documents</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Value:</label>
+                                    <div class="controls">
+                                        <span id="value">€200.00</span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="span6">
+                            <fieldset>
+                                <div class="control-group">
+                                    <label class="control-label">Invoice amount:</label>
+                                    <div class="controls">
+                                        <span class="invoiceamount">€23.00</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Sales price:</label>
+                                    <div class="controls">
+                                        <span class="salesprice">€55.00</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Invoice amount:</label>
+                                    <div class="controls">
+                                        <span class="costprice">€23.00</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Profit:</label>
+                                    <div class="controls">
+                                        <span class="profit">€32.00 (58.18%)</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Invoices accepted:</label>
+                                    <div class="controls">
+                                        <span class="invoiceaccepted">€0.00</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Invoice amount:</label>
+                                    <div class="controls">
+                                        <span class="invoiceexpected">€23.00</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">No. items:</label>
+                                    <div class="controls">
+                                        <span id="3rdpartyref">1</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Dead weight:</label>
+                                    <div class="controls">
+                                        <span id="3rdpartyref">20kg</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Volumetric weight:</label>
+                                    <div class="controls">
+                                        <span id="3rdpartyref">30kg</span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="page-header sectionbartoggle" tabindex="0">
+                        <h1>
+							<small><i class="icon-chevron-down"></i>Pricing lines</small>
+						</h1>
+                    </div>
+                    <div class="row anything">
+                        <div class="span12">
+                            <table class="table-condensed table table-striped datatabled" id="pricelinetable">
+                                <thead>
+                                    <tr>
+                                        <th>Supplier</th>
+                                        <th>Invoice no.</th>
+                                        <th>Leg code</th>
+                                        <th>Description</th>
+                                        <th>No. units</th>
+                                        <th>Unit cost</th>
+                                        <th>Total cost</th>
+                                        <th width="50px">
+                                            <button class="addnewrow btn btn-mini-icon pull-right include" id="pricelinetablerownew">
+                                                <i class="icon-plus"></i>
+                                            </button>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="supplier">DHL</span>
+                                        </td>
+                                        <td><span class="invoiceno">123456789</span>
+                                        </td>
+                                        <td><span class="legcode">DHLLEG1</span>
+                                        </td>
+                                        <td>
+                                            <textarea name="priceline1desc" data-required="required" disabled="disabled" class="invoicedesc input-large">This is an example description for DHL1</textarea>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="priceline1unitno" disabled="disabled" class="input-small invoiceunitno" data-required="required" data-valid="integer" value="3" />
+                                        </td>
+                                        <td>
+                                            <input type="text" name="priceline1unitcost" disabled="disabled" class="input-small invoiceunitcost" data-required="required" data-valid="number" value="25.00" />
+                                        </td>
+                                        <td><span class="totalcost">€50.00</span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-mini-icon pull-right flagforapproval">
+                                                <i class="icon-exclamation-sign"></i>
+                                            </button>
+                                            <button class="btn btn-mini-icon pull-right confirmmatch">
+                                                <i class="icon-check"></i>
+                                            </button>
+                                            <button class="btn btn-mini-icon pull-right">
+                                                <i class="icon-ban-circle"></i>
+                                            </button>
+                                            <button class="edittable btn btn-mini-icon pull-right">
+                                                <i class="icon-pencil"></i>
+                                            </button>
+                                            <button class="locktable btn btn-mini-icon pull-right nodisplay">
+                                                <i class="icon-remove"></i>
+                                            </button>
+                                            <button class="submit btn btn-mini-icon pull-right nodisplay" data-submit-settings="table1submit">
+                                                <i class="icon-ok"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="disabled">
+                                        <td><span class="supplier">FEDEX</span>
+                                        </td>
+                                        <td><span class="invoiceno">123456789</span>
+                                        </td>
+                                        <td><span class="legcode">FEDEX1</span>
+                                        </td>
+                                        <td><span class="invoicedesc">Description of
+												FEDEX1, uneditable because this is a DHL invoice</span>
+                                        </td>
+                                        <td><span class="invoiceunitno">1</span>
+                                        </td>
+                                        <td><span class="invoiceunitcost">€20.00</span>
+                                        </td>
+                                        <td><span class="totalcost">€20.00</span>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr class="nodisplay pricelinetablerownew pricelinetablerownewhidden">
+                                        <td><span class="supplier">DHL</span>
+                                        </td>
+                                        <td><span class="invoiceno">123456789</span>
+                                        </td>
+                                        <td><span class="legcode">DHLLEG1</span>
+                                        </td>
+                                        <td>
+                                            <textarea name="priceline1desc" data-required="required" class="invoicedesc input-large"></textarea>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="priceline1unitno" class="input-small invoiceunitno" data-required="required" data-valid="integer" value="" />
+                                        </td>
+                                        <td>
+                                            <input type="text" name="priceline1unitcost" class="input-small invoiceunitcost" data-required="required" data-valid="number" value="" />
+                                        </td>
+                                        <td><span class="totalcost"></span>
+                                        </td>
+                                        <td>
+                                            <button class="hidenewrow btn btn-mini-icon pull-right">
+                                                <i class="icon-remove"></i>
+                                            </button>
+                                            <button class="submit btn btn-mini-icon pull-right" data-submit-settings="table1submit">
+                                                <i class="icon-ok"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn modalclose" data-firewarning="" aria-hidden="true">Close</button>
+        </div>
+    </div>
+    
+    <!-- The template to display files available for upload -->
+    <script id="template-upload" type="text/x-tmpl">
+	/*<![CDATA[*/
+        {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <tr class="template-upload fade">
+            <td>
+                <span class="preview"></span>
+            </td>
+            <td>
+                <p class="name">{%=file.name%}</p>
+                {% if (file.error) { %}
+                <div><span class="label label-important">Error</span> {%=file.error%}</div>
+                {% } %}
+            </td>
+            <td>
+                <p class="size">{%=o.formatFileSize(file.size)%}</p>
+                {% if (!o.files.error) { %}
+                <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <div class="bar" style="width:0%;"></div>
+                </div>
+                {% } %}
+            </td>
+            <td>
+                {% if (!o.files.error && !i && !o.options.autoUpload) { %}
+                <button class="btn btn-primary start">
+                    <i class="icon-upload icon-white"></i>
+                    <span>Start</span>
+                </button>
+                {% } %} {% if (!i) { %}
+                <button class="btn btn-warning cancel">
+                    <i class="icon-ban-circle icon-white"></i>
+                    <span>Cancel</span>
+                </button>
+                {% } %}
+            </td>
+        </tr>
+        {% } %}
+        /*]]>*/
+    </script>
+    
+    <!-- The template to display files available for download -->    
+    <script id="template-download" type="text/x-tmpl">
+	/*<![CDATA[*/
+        {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <tr class="template-download fade">
+            <td>
+                <span class="preview">
+            {% if (file.thumbnailUrl) { %}
+            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+            {% } %}
+            </span>
+            </td>
+            <td>
+                <p class="name">
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl? 'data-gallery': ''%}>{%=file.name%}</a>
+                </p>
+                {% if (file.error) { %}
+                <div><span class="label label-important">Error</span> {%=file.error%}</div>
+                {% } %}
+            </td>
+            <td>
+                <span class="size">{%=o.formatFileSize(file.size)%}</span>
+            </td>
+            <td>
+                <button class="btn btn-danger delete deleteuploaditem" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}" {% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}' {% } %}>
+                    <i class="icon-trash icon-white"></i>
+                    <span>Delete</span>
+                </button>
+                <input type="checkbox" name="delete" value="1" class="toggle" />
+            </td>
+        </tr>
+        {% } %}
+        /*]]>*/
+    </script>
+
+    <script src="js/dataTables.fixedColumns.min.js" th:src="@{/resources/js/reconcileinvoice/dataTables.fixedColumns.min.js}"></script>
+    <span th:remove="tag" th:include="commons :: metafour-ui-js"></span>
+    <script src="js/reconcile-invoice.js" th:src="@{/resources/js/reconcileinvoice/reconcile-invoice.js}"></script>
+
+    <script>
+        (window.jQuery);
+        $(document).ready(function() {
+            setvalidator();
+            metaboot($('body'));
+            addvalidation($('body'));
+            
+            /* var jobSearchMethod = $('input[name="jobSearchMethod"]:checked').val();
+            if (jobSearchMethod == "JOS") {
+            	$('#jobsearchmethodradiosjobsearch').trigger('click');
+            } */
+            
+        });
+    </script>
+
+    <!-- END Timeline Embed-->
+</body>
+
+</html>

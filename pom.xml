@@ -3,20 +3,39 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.metafour</groupId>
 	<artifactId>netcourier-recon</artifactId>
-	<packaging>jar</packaging>	
+	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
 		<skipTests>true</skipTests>
 		<spring.version>4.2.4.RELEASE</spring.version>
+		<netcourier-api.version>1.8.1-SNAPSHOT</netcourier-api.version>
+		
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.metafour</groupId>
+			<artifactId>netcourier-api</artifactId>
+			<version>${netcourier-api.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.metafour</groupId>
 			<artifactId>metafour-commons</artifactId>
 			<version>1.0.2</version>
 		</dependency>
+		<!-- <dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency> -->
+
 
 		<!-- Test -->
 		<dependency>

@@ -1,0 +1,153 @@
+<section id="invoicelines-section" class='' th:fragment="invoice-lines-section" xmlns:th="http://www.thymeleaf.org">
+	<div class="page-header sectionbartoggle" tabindex="0">
+		<h1>
+			<small><i class="icon-chevron-down"></i><span th:text="#{supplierinvoice.outcome.label}">Reconciliation outcome</span></small>
+		</h1>
+	</div>
+	<div class="row anything">
+		<div class="span12">
+			<fieldset>
+				<div class="invtotals">
+					<h3><span>Invoice totals</span></h3>
+					<div class="importanttotals">
+						<span class="totalcontainer"><span
+							class="expectedtotalgrosslabel">Expected total:</span> <span
+							class="expectedgross">€2000.00</span></span> <span
+							class="totalcontainer"><span class="totalgrosslabel">Gross
+								total:</span> <span class="totalgross">€2000.00</span></span> <span
+							class="totalcontainer"><span class="totalreconciledlabel">Reconciled
+								total:</span> <span class="totalreconciled">€0.00</span></span>
+					</div>
+					<div class="othertotals">
+						<span class="totalcontainer"><span class="totalnetlabel">Net
+								total:</span> <span class="totalnet">€1600.00</span></span> <span
+							class="totalcontainer"><span class="totaltaxlabel">Total
+								tax:</span> <span class="totaltax">€400.00</span></span> <span
+							class="totalcontainer"><span class="totalfuellabel">Total
+								fuel surcharge:</span> <span class="totalfuel">€200.21</span></span>
+					</div>
+					<div class="othertotals">
+						<span class="totalcontainer"><span class="totaljobslabel">Total
+								jobs:</span> <span class="totaljobs">204</span></span> <span
+							class="totalcontainer"><span class="totalweightlabel">Total
+								weight:</span> <span class="totalweight">500kg</span></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="span12">
+			<form class="form-horizontal">
+				<div class="control-group">
+					<label class="control-label">Search for additional jobs:</label>
+					<div class="controls">
+						<div class="input-append">
+							<input id="additionaljobsearch" name="additionaljobsearch"
+								type="text" placeholder="Search" autocomplete="off"
+								class="typeahead input-large include"
+								data-search-settings="search2" data-required="required" /><span
+								class="add-on"><i class="icon-search"></i></span> <input
+								type="hidden" value="" name="additionaljobsearchKey"
+								class="typeahead-val" />
+						</div>
+					</div>
+				</div>
+				<table
+					class="datatabled table-condensed table table-striped invoicetables"
+					id="invoicejobs" width="100%" data-datatablescroll="Y"
+					data-fixright="3">
+					<thead>
+						<tr>
+							<th data-datasort="Y">Booking date</th>
+							<th>HAWB</th>
+							<th>Client</th>
+							<th>Pickup</th>
+							<th>Destination</th>
+							<th>Weight</th>
+							<th>Sale price (GBP)</th>
+							<th>Profit %</th>
+							<th>Cost pre surcharge</th>
+							<th>Cost(GBP)</th>
+							<th data-defaultsort="desc">3rd party ref</th>
+							<th>Cost (EUR)</th>
+							<th>
+								<button id="reconcilecosts" class="btn btn-success pull-right">Reconcile
+									all</button>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><span data-sort-value="20140207">07-Feb-2014</span></td>
+							<td><span>HAWB</span></td>
+							<td><span>Client</span></td>
+							<td><span>Pickup</span></td>
+							<td><span>Destination</span></td>
+							<td><span>Weight</span></td>
+							<td><span>Sale price (GBP)</span></td>
+							<td><span>Profit %</span></td>
+							<td><span>Cost pre surcharge</span></td>
+							<td><span>Cost(GBP)</span></td>
+							<td><span>3rd party ref</span></td>
+							<td><span>Cost (EUR)</span></td>
+							<td><span class="buttoncell">
+									<button class="btn confirmmatch">
+										<i class="icon icon-check"></i>
+									</button>
+									<button class="btn track" data-toggle="modal"
+										data-target="#invrecmodal">
+										<i class="icon icon-pencil"></i>
+									</button>
+							</span></td>
+						</tr>
+						<tr>
+							<td><span data-sort-value="20140108">08-Jan-2014</span></td>
+							<td><span>HAWB</span></td>
+							<td><span>Client</span></td>
+							<td><span>Pickup</span></td>
+							<td><span>Destination</span></td>
+							<td><span>Weight</span></td>
+							<td><span>Sale price (GBP)</span></td>
+							<td><span>Profit %</span></td>
+							<td><span>Cost pre surcharge</span></td>
+							<td><span>Cost(GBP)</span></td>
+							<td><span>3rd party ref</span></td>
+							<td><span>Cost (EUR)</span></td>
+							<td><span class="buttoncell">
+									<button class="btn confirmmatch">
+										<i class="icon icon-check"></i>
+									</button>
+									<button class="btn track" data-toggle="modal"
+										data-target="#invrecmodal">
+										<i class="icon icon-pencil"></i>
+									</button>
+							</span></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td class="searchable">Tue, 02-Jan-2014</td>
+							<td class="searchable">3rd party ref</td>
+							<td class="searchable">Client</td>
+							<td class="searchable">Pickup</td>
+							<td class="searchable">Destination</td>
+							<td class="searchable">Weight</td>
+							<td><span class="actionfiller"></span></td>
+							<td><span class="actionfiller"></span></td>
+							<td><span class="actionfiller"></span></td>
+							<td><span class="actionfiller"></span></td>
+							<td class="searchable">HAWB</td>
+							<td><span class="actionfiller"></span></td>
+							<td><span class="actionfiller"></span></td>
+						</tr>
+					</tfoot>
+				</table>
+			</form>
+			<div class='pull-right pageconfirmbuttonholder'>
+				<button id="lockjobs" class="btn btn-primary pull-right">Lock
+					manifest</button>
+			</div>
+		</div>
+	</div>
+</section>
+
+
