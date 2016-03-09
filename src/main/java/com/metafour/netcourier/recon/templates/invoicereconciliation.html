@@ -47,10 +47,11 @@
 
         <form class="form-horizontal fileupload" th:object="${purchaseInvoice}" id="mainform" th:action="@{'/supplierinvoice/save'}" method="POST" enctype="multipart/form-data" data-url="/path/to/upload/handler.json">
         	<input type="hidden" th:field="*{id}" />
-        	        	
+        	
         	<!-- Invoice details section -->
-            <section id="invoicedetails-section" th:include="invoicedetails :: invoice-details-section"></section>            
-        </form><p/>
+            <section id="invoicedetails-section" th:include="invoicedetails :: invoice-details-section"></section>
+        </form>
+        <p/>
 
         <!-- CSV UPLOADS ERRORS -->
        	<section id="invoiceuploaderror-section" class='nodisplay'  data-clickchangegroup="jobsearchmethodradios" th:include="invoiceuploaderror :: invoice-upload-error"></section>
@@ -61,9 +62,8 @@
         </div>
 
         <!-- reconcile with file upload -->
-        <div id="inputfileajaxsection" class="">
+        <div id="inputfileajaxsection" class="nodisplay">
         	<section id="invoicelines-section" th:include="invoicelines_inputfile :: invoice-lines-section"></section>
-            
         </div>
     </div>
     
@@ -400,16 +400,9 @@
             setvalidator();
             metaboot($('body'));
             addvalidation($('body'));
-            
-            /* var jobSearchMethod = $('input[name="jobSearchMethod"]:checked').val();
-            if (jobSearchMethod == "JOS") {
-            	$('#jobsearchmethodradiosjobsearch').trigger('click');
-            } */
-            
+            supplierInvoiceInit();
         });
     </script>
-
-    <!-- END Timeline Embed-->
-</body>
-
+    
+	</body>
 </html>

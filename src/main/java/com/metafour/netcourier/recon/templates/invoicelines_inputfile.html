@@ -36,7 +36,7 @@
 			</fieldset>
 		</div>
 		<div class="span12">
-			<ul class="nav nav-tabs" id="myTab">
+			<ul class="nav nav-tabs" id="inputfiletab">
 				<li class="active"><a href="#matches" data-toggle="tab">Reconciled (200)</a></li>
 				<li><a href="#errors" data-toggle="tab">Errors (4)</a></li>
 			</ul>
@@ -286,4 +286,19 @@
 			</div>
 		</div>
 	</div>
+	<script>
+        (window.jQuery);
+        $(document).ready(function() {        	
+        	$('#inputfiletab a').click(function(e) {
+                e.preventDefault();
+                $(this).tab('show');
+            }).on('shown', function(e) {
+                var tabcontent = $(e.target).attr('href');
+                $(tabcontent).find('.dataTables_scrollBody .invoicetables').each(function() {
+                    $(this).dataTable().fnAdjustColumnSizing();
+                });
+            });
+        });
+    </script>    
+	
 </section>

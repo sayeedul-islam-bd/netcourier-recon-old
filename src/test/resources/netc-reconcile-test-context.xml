@@ -1,0 +1,60 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:property-placeholder location="classpath:netc.properties" ignore-unresolvable="true" ignore-resource-not-found="true" />
+	
+	<context:component-scan base-package="com.metafour.netcourier.service" />
+	<!-- <context:component-scan base-package="com.metafour.netcourier.service.impl" /> -->
+	<context:component-scan base-package="net.m4.netcourier.recon.service" />	
+	
+	<bean class="net.m4.netcourier.recon.service.SessionManagerImpl" />
+	
+	<bean id="appConfig" class="com.metafour.netcourier.service.AppConfig" factory-method="getInstance" />
+	<bean class="com.metafour.netcourier.service.ListService" />
+	<bean class="com.metafour.netcourier.service.NumberSeriesService" />
+	<bean class="com.metafour.netcourier.service.impl.BookingServiceImpl" />
+	<bean class="com.metafour.netcourier.service.impl.ClientServiceImpl" />
+	<bean class="com.metafour.netcourier.service.impl.ContactServiceImpl" />
+	<bean class="com.metafour.netcourier.service.impl.CurrencyServiceImpl" />
+	<bean class="com.metafour.netcourier.service.impl.JobImportServiceImpl" />
+<!-- 	<bean class="com.metafour.netcourier.exchange.LoginServiceXImpl" /> -->
+	<bean class="com.metafour.netcourier.service.impl.PricingServiceImpl" />
+	<bean class="com.metafour.netcourier.service.impl.ProfileServiceImpl" />
+	<bean class="com.metafour.netcourier.service.impl.SearchSuggestServiceImpl" />
+	<bean class="com.metafour.netcourier.service.impl.TrackServiceImpl" />
+
+	<bean id="keyMap" class="com.metafour.orm.pgsql.PgKeymap">
+		<constructor-arg value="classpath:orm-config-netc.xml" type="java.io.InputStream" />
+	</bean>
+	<bean class="com.metafour.orm.SessionFactory" factory-method="newInstance">
+		<constructor-arg index="0">
+			<util:properties>
+				<prop key="com.metafour.orm.SessionFactory">com.metafour.orm.pgsql.PgSessionFactoryImpl</prop>
+				<prop key="com.metafour.orm.modelbuilder.pkg">com.metafour.netcourier.model.mfsql</prop>
+			</util:properties>
+		</constructor-arg>
+		<property name="dataSource">
+			<jee:jndi-lookup jndi-name="java:comp/env/jdbc/pgDS" />
+		</property>
+		<property name="keyMap" ref="keyMap" />
+		<property name="formatter">
+			<bean class="com.metafour.orm.pgsql.PgFormatter" />
+		</property>
+	</bean>
+
+	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<property name="scopes">
+			<map>
+				<entry key="request" value="org.springframework.context.support.SimpleThreadScope" />
+				<entry key="session" value="org.springframework.context.support.SimpleThreadScope" />
+			</map>
+		</property>
+	</bean>
+</beans>

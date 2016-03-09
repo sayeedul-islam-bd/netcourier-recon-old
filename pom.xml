@@ -10,45 +10,46 @@
 		<skipTests>true</skipTests>
 		<spring.version>4.2.4.RELEASE</spring.version>
 		<netcourier-api.version>1.8.1-SNAPSHOT</netcourier-api.version>
-		
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.metafour</groupId>
 			<artifactId>netcourier-api</artifactId>
 			<version>${netcourier-api.version}</version>
 			<exclusions>
 				<exclusion>
-					<artifactId>slf4j-api</artifactId>
-					<groupId>org.slf4j</groupId>
+					<artifactId>metafour-email</artifactId>
+					<groupId>com.metafour</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>dx-addresslookup-stub</artifactId>
+					<groupId>com.metafour</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jersey-client</artifactId>
+					<groupId>org.glassfish.jersey.core</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>google-maps-services</artifactId>
+					<groupId>com.google.maps</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>activemq-spring</artifactId>
+					<groupId>org.apache.activemq</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-jms</artifactId>
+					<groupId>org.springframework</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>com.metafour</groupId>
-			<artifactId>metafour-commons</artifactId>
-			<version>1.0.2</version>
-		</dependency>
-		<!-- <dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency> -->
-
 
 		<!-- Test -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>${spring.version}</version>
-			<scope>test</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
@@ -56,11 +57,20 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>com.metafour</groupId>
+			<artifactId>mfsqldriver</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -77,9 +87,7 @@
 			<artifactId>log4j</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
-
 
 	<developers>
 		<developer>
