@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.metafour.netcourier.recon.service.impl;
 
 import java.text.ParseException;
@@ -45,9 +42,6 @@ import com.metafour.orm.model.MapCollector;
 import com.metafour.util.M4Time;
 import com.metafour.util.StringsM4;
 
-/**
- * @author Sayeedul
- */
 @Service
 public class SupplierInvoiceImpl implements SupplierInvoice {
 	private static final Logger logger = LoggerFactory.getLogger(SupplierInvoiceImpl.class);
@@ -423,7 +417,6 @@ public class SupplierInvoiceImpl implements SupplierInvoice {
 		return null;
 	}
 
-
 	@Override
 	public boolean reconcileCostLine(String costLineId, String purchaseInvoiceId, BindingResult errors, Locale locale)
 			throws ReconcileInvoiceException {
@@ -451,11 +444,6 @@ public class SupplierInvoiceImpl implements SupplierInvoice {
 		if (pInvoice == null) {
 			throw new ReconcileInvoiceException("InvalidPurchaseInvoice", "Purchase invoice can not be null");
 		}
-
-		/*new NCBeanValidator(appConfig.getCourierCode()).validate(ci, errors, validator);
-		if (errors.hasErrors()) {
-			return errors;
-		}*/
 
 		Session<JobCost> ciSession =  factory.getSession(JobCost.class);
 
@@ -511,7 +499,6 @@ public class SupplierInvoiceImpl implements SupplierInvoice {
 		ci.setReconciledBy("");
 		ci.setReconcileDate(Calendar.getInstance().getTime());
 		ci.setReconcileTime(new M4Time(Calendar.getInstance()));
-		ci.setStatus(RecordStatus.L);
 		ci.setVersionNo(ci.getVersionNo() + 1);
 		
 		if (ciSession.update(ci) != 1){
