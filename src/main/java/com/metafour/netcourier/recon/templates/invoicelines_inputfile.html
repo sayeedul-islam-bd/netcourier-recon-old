@@ -1,7 +1,7 @@
 <section id="invoicelines-section" th:fragment="invoice-lines-section" xmlns:th="http://www.thymeleaf.org">
 	<div class="page-header sectionbartoggle" tabindex="0">
 		<h1>
-			<small><i class="icon-chevron-down"></i>Reconciliation outcome</small>
+			<small th:text="#{supplierinvoice.sectionreconciliation.label}"><i class="icon-chevron-down"></i>Reconciliation outcome</small>
 		</h1>
 	</div>
 	<div class="row anything">
@@ -10,27 +10,18 @@
 				<div class="invtotals">
 					<h3>Invoice totals</h3>
 					<div class="importanttotals">
-						<span class="totalcontainer"><span
-							class="expectedtotalgrosslabel">Expected total:</span> <span
-							class="expectedgross">€2000.00</span></span> <span
-							class="totalcontainer"><span class="totalgrosslabel">Gross
-								total:</span> <span class="totalgross">€2000.00</span></span> <span
-							class="totalcontainer"><span class="totalreconciledlabel">Reconciled
-								total:</span> <span class="totalreconciled">€1234.56</span></span>
+						<span class="totalcontainer"><span class="expectedtotalgrosslabel">Expected total:</span> <span	class="expectedgross">€2000.00</span></span> 
+						<span class="totalcontainer"><span class="totalgrosslabel">Gross total:</span> <span class="totalgross">€2000.00</span></span> 
+						<span class="totalcontainer"><span class="totalreconciledlabel">Reconciled total:</span> <span class="totalreconciled">€1234.56</span></span>
 					</div>
 					<div class="othertotals">
-						<span class="totalcontainer"><span class="totalnetlabel">Net
-								total:</span> <span class="totalnet">€1600.00</span></span> <span
-							class="totalcontainer"><span class="totaltaxlabel">Total
-								tax:</span> <span class="totaltax">€400.00</span></span> <span
-							class="totalcontainer"><span class="totalfuellabel">Total
-								fuel surcharge:</span> <span class="totalfuel">€200.21</span></span>
+						<span class="totalcontainer"><span class="totalnetlabel" th:text="#{supplierinvoice.nettotal.label}">Nettotal:</span> <span class="totalnet">€1600.00</span></span> 
+						<span class="totalcontainer"><span class="totaltaxlabel">Total tax:</span> <span class="totaltax">€400.00</span></span> 
+						<span class="totalcontainer"><span class="totalfuellabel">Total fuel surcharge:</span> <span class="totalfuel">€200.21</span></span>
 					</div>
 					<div class="othertotals">
-						<span class="totalcontainer"><span class="totaljobslabel">Total
-								jobs:</span> <span class="totaljobs">204</span></span> <span
-							class="totalcontainer"><span class="totalweightlabel">Total
-								weight:</span> <span class="totalweight">500kg</span></span>
+						<span class="totalcontainer"><span class="totaljobslabel">Total jobs:</span> <span class="totaljobs">204</span></span> 
+						<span class="totalcontainer"><span class="totalweightlabel">Total weight:</span> <span class="totalweight">500kg</span></span>
 					</div>
 				</div>
 			</fieldset>
