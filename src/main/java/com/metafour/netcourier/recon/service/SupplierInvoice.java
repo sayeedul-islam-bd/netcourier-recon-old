@@ -33,17 +33,25 @@ public interface SupplierInvoice {
 
 	public Map<String, SupplierInvoiceLine> getReconciledJobs(String purchaseInvoiceId) throws ReconcileInvoiceException;
 
+	public JobCost getCostLineDetails(String costLineId, ModelMap model) throws ReconcileInvoiceException;
+	
+	public boolean reconcileInputFile (PurchaseInvoice pInvoice) throws ReconcileInvoiceException;
+	
+	public boolean reconcileCostLine(String costLineId, String purchaseInvoiceId, BindingResult errors, Locale locale)
+			throws ReconcileInvoiceException;
+	
+	public boolean reconcileCostLine(String costLineId, PurchaseInvoice pInvoice, BindingResult errors, Locale locale)
+			throws ReconcileInvoiceException;
+	
+	public boolean unReconcileCostLine (String costLineId) throws ReconcileInvoiceException;
+
 	public String uploadFiles() throws ReconcileInvoiceException;
 	
 	public List<String> validateInputFile() throws ReconcileInvoiceException;
 	
-	public JobCost getCostLineDetails(String costLineId, ModelMap model) throws ReconcileInvoiceException;
-
 	public Object saveSupplierInvoiceDetails(PurchaseInvoice purchaseInvoice, BindingResult bindingResult, Locale locale) throws ReconcileInvoiceException;
 	
 	public Object saveCostLineDetails(JobCost jobCost, BindingResult bindingResult, Locale locale) throws ReconcileInvoiceException;
 	
-	
 
-	
 }

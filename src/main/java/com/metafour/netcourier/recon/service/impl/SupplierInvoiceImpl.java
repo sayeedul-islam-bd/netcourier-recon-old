@@ -5,6 +5,7 @@ package com.metafour.netcourier.recon.service.impl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -41,6 +42,7 @@ import com.metafour.netcourier.validation.NCBeanValidator;
 import com.metafour.orm.Session;
 import com.metafour.orm.SessionFactory;
 import com.metafour.orm.model.MapCollector;
+import com.metafour.util.M4Time;
 import com.metafour.util.StringsM4;
 
 /**
@@ -342,11 +344,11 @@ public class SupplierInvoiceImpl implements SupplierInvoice {
 	 * Calculate and return profit percentage
 	 */
 	private Double calculateProfit(Double salesPrice, Double actualCost, Double estimatedCost) {
-		
+
 		if (salesPrice == null) salesPrice = 0D;
 		if (actualCost == null) actualCost = 0D;
 		if (estimatedCost == null) estimatedCost = 0D;
-		
+
 		actualCost = actualCost != 0 ? actualCost : estimatedCost;
 
 		Double profit = salesPrice - actualCost;
@@ -420,5 +422,107 @@ public class SupplierInvoiceImpl implements SupplierInvoice {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	@Override
+	public boolean reconcileCostLine(String costLineId, String purchaseInvoiceId, BindingResult errors, Locale locale)
+			throws ReconcileInvoiceException {
+
+		if (StringsM4.isBlank(costLineId)) {
+			throw new ReconcileInvoiceException("EmptyJobCostId", "Cost line id can not be empty");
+		}
+
+		if (StringsM4.isBlank(purchaseInvoiceId)) {
+			throw new ReconcileInvoiceException("EmptyPurchaseInvoiceId", "Purchase invoice can not be empty");
+		}
+
+		PurchaseInvoice pInvoice = factory.getSession(PurchaseInvoice.class).getById(purchaseInvoiceId);
+
+		return reconcileCostLine(costLineId, pInvoice, errors, locale);
+	}
+
+	@Override
+	public boolean reconcileCostLine(String costLineId, PurchaseInvoice pInvoice, BindingResult errors, Locale locale) throws ReconcileInvoiceException {
+
+		if (StringsM4.isBlank(costLineId)) {
+			throw new ReconcileInvoiceException("EmptyJobCostId", "Cost line id can not be empty");
+		}
+
+		if (pInvoice == null) {
+			throw new ReconcileInvoiceException("InvalidPurchaseInvoice", "Purchase invoice can not be null");
+		}
+
+		/*new NCBeanValidator(appConfig.getCourierCode()).validate(ci, errors, validator);
+		if (errors.hasErrors()) {
+			return errors;
+		}*/
+
+		Session<JobCost> ciSession =  factory.getSession(JobCost.class);
+
+		JobCost ci = ciSession.getById(costLineId);
+		if (ci == null) {
+			throw new ReconcileInvoiceException("InvalidJobCostId", "No cost line found with id: " + costLineId);
+		}
+
+		// Set cost reconciliation values
+		ci.setPurchaseInvoiceId(pInvoice.getId());
+		ci.setReconciled(true);
+		ci.setInvoiceReference(pInvoice.getSupplierInvoiceNo());
+		ci.setReconciledBy(manager.getContact().getContactId());
+		ci.setReconcileDate(Calendar.getInstance().getTime());
+		ci.setReconcileTime(new M4Time(Calendar.getInstance()));
+		ci.setStatus(RecordStatus.L);
+		ci.setVersionNo(ci.getVersionNo() + 1);
+
+		if (ciSession.update(ci) != 1){
+			logger.error("Job cost line:" + ci.getJobCostId() + " failed to reconcile cost line");
+			throw new ReconcileInvoiceException("ReconciliationFailed", "Job cost line:" + ci.getJobCostId() + " failed to reconcile cost");
+		}
+
+		logger.info("Job cost line:" + ci.getJobCostId() + " reconciled successfully");
+
+		return true;
+	}
+
+	@Override
+	public boolean reconcileInputFile(PurchaseInvoice pInvoice) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean unReconcileCostLine(String costLineId) throws ReconcileInvoiceException {
+
+		if (StringsM4.isBlank(costLineId)) {
+			throw new ReconcileInvoiceException("EmptyJobCostId", "Cost line id can not be empty");
+		}
+
+		Session<JobCost> ciSession =  factory.getSession(JobCost.class);
+
+		JobCost ci = ciSession.getById(costLineId);
+		if (ci == null) {
+			throw new ReconcileInvoiceException("InvalidJobCostId", "No cost line found with id: " + costLineId);
+		}
+
+		// Set cost reconciliation values
+		ci.setPurchaseInvoiceId("");
+		ci.setReconciled(false);
+		ci.setInvoiceReference("");
+		ci.setReconciledBy("");
+		ci.setReconcileDate(Calendar.getInstance().getTime());
+		ci.setReconcileTime(new M4Time(Calendar.getInstance()));
+		ci.setStatus(RecordStatus.L);
+		ci.setVersionNo(ci.getVersionNo() + 1);
+		
+		if (ciSession.update(ci) != 1){
+			logger.error("Job cost line:" + ci.getJobCostId() + " failed to unreconcile cost line");
+			throw new ReconcileInvoiceException("UnreconciliationFailed", "Job cost line:" + ci.getJobCostId() + " failed to reconcile cost");
+		}
+
+		logger.info("Job cost line:" + ci.getJobCostId() + " unreconciled successfully");
+
+		return true;
+	}
+
 
 }
