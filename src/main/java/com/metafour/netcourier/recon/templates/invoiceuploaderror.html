@@ -1,55 +1,48 @@
-<section id='invoiceuploaderror-section' th:fragment="invoice-upload-error" xmlns:th="http://www.thymeleaf.org">
+<section id='invoiceuploaderror-section'
+	th:fragment="invoice-upload-error" xmlns:th="http://www.thymeleaf.org">
 	<div class="page-header sectionbartoggle" tabindex="0">
 		<h1>
-			<small><i class="icon-chevron-down"></i>Upload errors
-				<button id="errortabledownload" class="btn btn-danger pull-right">Download CSV with error highlights</button></small>
+			<small>
+				<i class="icon-chevron-down"></i>Upload errors 
+				<button id="errortabledownload" class="btn btn-danger pull-right" th:text="#{supplierinvoice.downloaderrorcsv.button}">Download CSV with error highlights</button>
+			</small>
 		</h1>
-	</div>	
+	</div>
 	<div class="row anything">
 		<div class="span12">
-			<table class="table table-condensed table-striped datatabled table-bordered" id='uploaderrortable'>
+			<table
+				class="table table-condensed table-striped datatabled table-bordered"
+				id='uploaderrortable'>
 				<thead>
 					<tr>
-						<th data-defaultsort="asc">Line no.</th>
-						<th>Column</th>
-						<th>Reason</th>
+						<th data-defaultsort="asc" th:text="#{supplierinvoice.errorlineno.label}">Line no.</th>
+						<th th:text="#{supplierinvoice.errorcolname.label}">Column</th>
+						<th th:text="#{supplierinvoice.errorreason.label}">Reason</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td>1</td>
 						<td>HAWB</td>
-						<td>HAWB column header could not be found<span
-							class="label label-important">HAWB column must exist and be
-								labelled with "HAWB".</span>
-						</td>
+						<td>HAWB column header could not be found<span class="label label-important">HAWB column must exist and be labelled with "HAWB".</span></td>
 					</tr>
 					<tr>
 						<td>1</td>
 						<td>Cost</td>
-						<td>Cost of "ABC" is not valid<span class="label label-inverse">Value
-								must be a number</span>
-						</td>
+						<td>Cost of "ABC" is not valid<span class="label label-inverse">Value must be a number</span></td>
 					</tr>
 					<tr>
 						<td>2</td>
 						<td>HAWB</td>
-						<td>HAWB column header could not be found<span
-							class="label label-important">HAWB column must exist and be
-								labelled with "HAWB".</span>
-						</td>
+						<td>HAWB column header could not be found<span class="label label-important">HAWB column must exist and be labelled with "HAWB".</span></td>
 					</tr>
 					<tr>
 						<td>3</td>
 						<td>HAWB</td>
-						<td>HAWB column header could not be found<span
-							class="label label-important">HAWB column must exist and be
-								labelled with "HAWB".</span>
-						</td>
+						<td>HAWB column header could not be found<span class="label label-important">HAWB column must exist and be labelled with "HAWB".</span></td>
 					</tr>
 				</tbody>
 			</table>
-		</div>		
+		</div>
 	</div>
-	
 </section>
