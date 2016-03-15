@@ -1,0 +1,244 @@
+<div class="modal nodisplay" id="invrecmodal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" th:fragment="invoice-cost-details-modal" xmlns:th="http://www.thymeleaf.org">
+        <div class="modal-header">
+            <h3 class="modallabel">Cost details</h3>
+        </div>
+        <div class="modal-body row">
+            <form class="form-horizontal span12">
+                <section>
+                    <div class="row anything">
+                        <div class="span6">
+                            <fieldset>
+                                <div class="control-group">
+                                    <label class="control-label">3rd party ref.:</label>
+                                    <div class="controls">
+                                        <span id="3rdpartyref">1MPORTANTC0DE</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">HAWB:</label>
+                                    <div class="controls">
+                                        <span id="hawb">EX00000000001</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Client:</label>
+                                    <div class="controls">
+                                        <span id="hawb">ACME Inc.</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Client code:</label>
+                                    <div class="controls">
+                                        <span id="hawb">ACME1NC</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Booking date/time:</label>
+                                    <div class="controls">
+                                        <span id="bookingdatetime"><span id="bookingdate">Mon,
+												01-Jan-2014</span> @ <span id="bookingtime">01:23</span></span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Destination:</label>
+                                    <div class="controls">
+                                        <span id="destination">Somewhere</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Contents type:</label>
+                                    <div class="controls">
+                                        <span id="contentype">Non-documents</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Value:</label>
+                                    <div class="controls">
+                                        <span id="value">€200.00</span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="span6">
+                            <fieldset>
+                                <div class="control-group">
+                                    <label class="control-label">Invoice amount:</label>
+                                    <div class="controls">
+                                        <span class="invoiceamount">€23.00</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Sales price:</label>
+                                    <div class="controls">
+                                        <span class="salesprice">€55.00</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Invoice amount:</label>
+                                    <div class="controls">
+                                        <span class="costprice">€23.00</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Profit:</label>
+                                    <div class="controls">
+                                        <span class="profit">€32.00 (58.18%)</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Invoices accepted:</label>
+                                    <div class="controls">
+                                        <span class="invoiceaccepted">€0.00</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Invoice amount:</label>
+                                    <div class="controls">
+                                        <span class="invoiceexpected">€23.00</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">No. items:</label>
+                                    <div class="controls">
+                                        <span id="3rdpartyref">1</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Dead weight:</label>
+                                    <div class="controls">
+                                        <span id="3rdpartyref">20kg</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Volumetric weight:</label>
+                                    <div class="controls">
+                                        <span id="3rdpartyref">30kg</span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="page-header sectionbartoggle" tabindex="0">
+                        <h1>
+							<small><i class="icon-chevron-down"></i>Pricing lines</small>
+						</h1>
+                    </div>
+                    <div class="row anything">
+                        <div class="span12">
+                            <table class="table-condensed table table-striped datatabled" id="pricelinetable">
+                                <thead>
+                                    <tr>
+                                        <th>Supplier</th>
+                                        <th>Invoice no.</th>
+                                        <th>Leg code</th>
+                                        <th>Description</th>
+                                        <th>No. units</th>
+                                        <th>Unit cost</th>
+                                        <th>Total cost</th>
+                                        <th width="50px">
+                                            <button class="addnewrow btn btn-mini-icon pull-right include" id="pricelinetablerownew">
+                                                <i class="icon-plus"></i>
+                                            </button>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="supplier">DHL</span>
+                                        </td>
+                                        <td><span class="invoiceno">123456789</span>
+                                        </td>
+                                        <td><span class="legcode">DHLLEG1</span>
+                                        </td>
+                                        <td>
+                                            <textarea name="priceline1desc" data-required="required" disabled="disabled" class="invoicedesc input-large">This is an example description for DHL1</textarea>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="priceline1unitno" disabled="disabled" class="input-small invoiceunitno" data-required="required" data-valid="integer" value="3" />
+                                        </td>
+                                        <td>
+                                            <input type="text" name="priceline1unitcost" disabled="disabled" class="input-small invoiceunitcost" data-required="required" data-valid="number" value="25.00" />
+                                        </td>
+                                        <td><span class="totalcost">€50.00</span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-mini-icon pull-right flagforapproval">
+                                                <i class="icon-exclamation-sign"></i>
+                                            </button>
+                                            <button class="btn btn-mini-icon pull-right confirmmatch">
+                                                <i class="icon-check"></i>
+                                            </button>
+                                            <button class="btn btn-mini-icon pull-right">
+                                                <i class="icon-ban-circle"></i>
+                                            </button>
+                                            <button class="edittable btn btn-mini-icon pull-right">
+                                                <i class="icon-pencil"></i>
+                                            </button>
+                                            <button class="locktable btn btn-mini-icon pull-right nodisplay">
+                                                <i class="icon-remove"></i>
+                                            </button>
+                                            <button class="submit btn btn-mini-icon pull-right nodisplay" data-submit-settings="table1submit">
+                                                <i class="icon-ok"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="disabled">
+                                        <td><span class="supplier">FEDEX</span>
+                                        </td>
+                                        <td><span class="invoiceno">123456789</span>
+                                        </td>
+                                        <td><span class="legcode">FEDEX1</span>
+                                        </td>
+                                        <td><span class="invoicedesc">Description of
+												FEDEX1, uneditable because this is a DHL invoice</span>
+                                        </td>
+                                        <td><span class="invoiceunitno">1</span>
+                                        </td>
+                                        <td><span class="invoiceunitcost">€20.00</span>
+                                        </td>
+                                        <td><span class="totalcost">€20.00</span>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr class="nodisplay pricelinetablerownew pricelinetablerownewhidden">
+                                        <td><span class="supplier">DHL</span>
+                                        </td>
+                                        <td><span class="invoiceno">123456789</span>
+                                        </td>
+                                        <td><span class="legcode">DHLLEG1</span>
+                                        </td>
+                                        <td>
+                                            <textarea name="priceline1desc" data-required="required" class="invoicedesc input-large"></textarea>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="priceline1unitno" class="input-small invoiceunitno" data-required="required" data-valid="integer" value="" />
+                                        </td>
+                                        <td>
+                                            <input type="text" name="priceline1unitcost" class="input-small invoiceunitcost" data-required="required" data-valid="number" value="" />
+                                        </td>
+                                        <td><span class="totalcost"></span>
+                                        </td>
+                                        <td>
+                                            <button class="hidenewrow btn btn-mini-icon pull-right">
+                                                <i class="icon-remove"></i>
+                                            </button>
+                                            <button class="submit btn btn-mini-icon pull-right" data-submit-settings="table1submit">
+                                                <i class="icon-ok"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn modalclose" data-firewarning="" aria-hidden="true">Close</button>
+        </div>
+    </div>

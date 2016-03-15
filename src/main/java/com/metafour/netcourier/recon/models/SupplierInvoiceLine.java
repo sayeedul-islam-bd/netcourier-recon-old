@@ -6,23 +6,23 @@ import com.metafour.netcourier.model.Client;
 
 public class SupplierInvoiceLine {
 	
-	private String jobId;
-	private String hawb;
-	private String tref;
+	public String jobId;
+	public String hawb;
+	public String tref;
 	
-	private String pickupFrom;					// Country : Place - 
-	private String deliveryTo;					// Country : Place
+	public String pickupFrom;					// Country : Place - 
+	public String deliveryTo;					// Country : Place
 	
-	private Client client;
+	public Client client;
 	
-	private Date bookingDate;
+	public Date bookingDate;
 	
-	private Double weight;						// CS.CWGT - chargeable weight
-	private Double profit;
-	private Double costBeforeSurcharge;		
-	private Double totalCostInCourierCurrency;
-	private Double totalCostInInvoiceCurrency;
-	private Double salesPrice;
+	public Double weight;						// CS.CWGT - chargeable weight
+	public Double profit;
+	public Double costBeforeSurcharge;		
+	public Double totalCostInCourierCurrency;
+	public Double totalCostInInvoiceCurrency;
+	public Double salesPrice;
 	
 
 	public SupplierInvoiceLine() {	

@@ -1,3 +1,6 @@
+[15-Mar-2016]
+* [SI] Added cost details modal template
+
 [14-Mar-2016]
 * [SI] Reconcile/unreconcile job cost line
 
