@@ -21,8 +21,8 @@
                                    	data-required="required" th:placeholder="#{supplierinvoice.supplier.placeholder}"
                                    	th:value="${supplierCode ne null ? supplierCode : ''}" 
                                    	th:attr="data-search-url=@{/search/supplier/}"/><span class="add-on"><i class="icon-search"></i></span>
-					<input type="hidden" th:field="*{supplierId}" class="typeahead-val include"/>
-					<input type="hidden" id="supplierdesc" class="typeahead-desc include"/>
+								<input type="hidden" th:field="*{supplierId}" class="typeahead-val include"/>
+								<input type="hidden" id="supplierdesc" class="typeahead-desc include"/>
                                </div>
                            </div>
                        </div>
@@ -148,11 +148,9 @@
                        <fieldset>
                            <div class="alert alert-info nodisplay" id="postsupplieralert">
                                <strong>Showing default mapping for Supplier A</strong>
-                               <br /> If you would like to update the default mapping for this supplier, click the "Save as default" button in this box. Otherwise we will treat this as a one off.
-                               <br />
-                               <button type="button" id="reloadsupplierdefault" class="btn">Reload default
-                               </button>
-                               <button type="button" id="updatesupplierdefault" class="btn btn-info">Save as default</button>
+                               <br/> If you would like to update the default mapping for this supplier, click the "Save as default" button in this box. Otherwise we will treat this as a one off.<br/>
+                               <button type="button" id="reloadsupplierdefault" class="btn" th:text="#{supplierinvoice.reloaddefault.button}">Reload default</button>
+                               <button type="button" id="updatesupplierdefault" class="btn btn-info" th:text="#{supplierinvoice.saveasdefault.button}">Save as default</button>
                            </div>
                            <div class="control-group">
                                <label for="trackingnocolumnstring" class="control-label" th:text="#{supplierinvoice.trackingnocolumnheader.label}">Tracking no. column header:</label>

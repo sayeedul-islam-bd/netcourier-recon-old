@@ -31,7 +31,6 @@
 				<li class="active"><a href="#matches" data-toggle="tab" th:text="#{supplierinvoice.tabheaderreconciled.label}">Reconciled (200)</a></li>
 				<li><a href="#errors" data-toggle="tab" th:text="#{supplierinvoice.tabheadererror.label}">Errors (4)</a></li>
 			</ul>
-
 			<div class="tab-content">
 				<div class="tab-pane active" id="matches">
 					<form class="form-horizontal">
@@ -168,8 +167,8 @@
 									<td><span class="errottablehighlight">Job not found</span></td>
 									<td><span class="errottablehighlight">Job not found</span></td>
 									<td><span class="errottablehighlight">Job not found</span></td>
-									<td><span>ABC000001 (On invoice)</span><span class="errottablehighlight" th:text="#{supplierinvoice.nojobfound.error}">Job not found</span></td>
-									<td><span>€123.45 (On invoice)</span><span class="errottablehighlight" th:text="#{supplierinvoice.nojobfound.error}">Job not found</span></td>
+									<td><span>ABC000001 (On invoice)</span><span class="errottablehighlight">Job not found</span></td>
+									<td><span>€123.45 (On invoice)</span><span class="errottablehighlight">Job not found</span></td>
 									<td><span class="errottablehighlight">Job not found</span></td>
 								</tr>
 								<tr>
@@ -236,7 +235,7 @@
 			</div>
 			<div class='pull-right pageconfirmbuttonholder'>
 				<button id="lockjobs" class="btn btn-primary pull-right" th:text="#{supplierinvoice.lockmanifest.button}">Lock manifest</button>
-				<button id="downloadcsv" class="btn pull-right" th:text="#{supplierinvoice.downloadascsv.button}">Download as	CSV</button>
+				<button id="downloadcsv" class="btn pull-right" th:text="#{supplierinvoice.downloadascsv.button}">Download as CSV</button>
 			</div>
 		</div>
 	</div>
