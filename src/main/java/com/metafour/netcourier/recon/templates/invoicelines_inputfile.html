@@ -1,44 +1,35 @@
 <section id="invoicelines-section" th:fragment="invoice-lines-section" xmlns:th="http://www.thymeleaf.org">
 	<div class="page-header sectionbartoggle" tabindex="0">
 		<h1>
-			<small><i class="icon-chevron-down"></i>Reconciliation outcome</small>
+			<small th:text="#{supplierinvoice.sectionoutcome.label}"><i class="icon-chevron-down"></i>Reconciliation outcome</small>
 		</h1>
 	</div>
 	<div class="row anything">
 		<div class="span12">
 			<fieldset>
 				<div class="invtotals">
-					<h3>Invoice totals</h3>
+					<h3 th:text="#{supplierinvoice.invoicetotals.label}">Invoice totals</h3>
 					<div class="importanttotals">
-						<span class="totalcontainer"><span
-							class="expectedtotalgrosslabel">Expected total:</span> <span
-							class="expectedgross">€2000.00</span></span> <span
-							class="totalcontainer"><span class="totalgrosslabel">Gross
-								total:</span> <span class="totalgross">€2000.00</span></span> <span
-							class="totalcontainer"><span class="totalreconciledlabel">Reconciled
-								total:</span> <span class="totalreconciled">€1234.56</span></span>
+						<span class="totalcontainer"><span class="expectedtotalgrosslabel" th:text="#{supplierinvoice.expectedtotals.label}">Expected total:</span> <span	class="expectedgross">€2000.00</span></span> 
+						<span class="totalcontainer"><span class="totalgrosslabel" th:text="#{supplierinvoice.grosstotals.label}">Gross total:</span> <span class="totalgross">€2000.00</span></span> 
+						<span class="totalcontainer"><span class="totalreconciledlabel" th:text="#{supplierinvoice.reconciled.label}">Reconciled total:</span> <span class="totalreconciled">€1234.56</span></span>
 					</div>
 					<div class="othertotals">
-						<span class="totalcontainer"><span class="totalnetlabel">Net
-								total:</span> <span class="totalnet">€1600.00</span></span> <span
-							class="totalcontainer"><span class="totaltaxlabel">Total
-								tax:</span> <span class="totaltax">€400.00</span></span> <span
-							class="totalcontainer"><span class="totalfuellabel">Total
-								fuel surcharge:</span> <span class="totalfuel">€200.21</span></span>
+						<span class="totalcontainer"><span class="totalnetlabel" th:text="#{supplierinvoice.nettotal.label}">Nettotal:</span> <span class="totalnet">€1600.00</span></span> 
+						<span class="totalcontainer"><span class="totaltaxlabel" th:text="#{supplierinvoice.totaltax.label}">Total tax:</span> <span class="totaltax">€400.00</span></span> 
+						<span class="totalcontainer"><span class="totalfuellabel" th:text="#{supplierinvoice.totalfuelsurcharge.label}">Total fuel surcharge:</span> <span class="totalfuel">€200.21</span></span>
 					</div>
 					<div class="othertotals">
-						<span class="totalcontainer"><span class="totaljobslabel">Total
-								jobs:</span> <span class="totaljobs">204</span></span> <span
-							class="totalcontainer"><span class="totalweightlabel">Total
-								weight:</span> <span class="totalweight">500kg</span></span>
+						<span class="totalcontainer"><span class="totaljobslabel" th:text="#{supplierinvoice.totaljobs.label}">Total jobs:</span> <span class="totaljobs">204</span></span> 
+						<span class="totalcontainer"><span class="totalweightlabel" th:text="#{supplierinvoice.totalweight.label}">Total weight:</span> <span class="totalweight">500kg</span></span>
 					</div>
 				</div>
 			</fieldset>
 		</div>
 		<div class="span12">
 			<ul class="nav nav-tabs" id="inputfiletab">
-				<li class="active"><a href="#matches" data-toggle="tab">Reconciled (200)</a></li>
-				<li><a href="#errors" data-toggle="tab">Errors (4)</a></li>
+				<li class="active"><a href="#matches" data-toggle="tab" th:text="#{supplierinvoice.tabheaderreconciled.label}">Reconciled (200)</a></li>
+				<li><a href="#errors" data-toggle="tab" th:text="#{supplierinvoice.tabheadererror.label}">Errors (4)</a></li>
 			</ul>
 
 			<div class="tab-content">
@@ -51,21 +42,20 @@
 							data-fixright="3">
 							<thead>
 								<tr>
-									<th data-datasort="Y">Booking date</th>
-									<th>HAWB</th>
-									<th>Client</th>
-									<th>Pickup</th>
-									<th>Destination</th>
-									<th>Weight</th>
-									<th>Sale price (GBP)</th>
-									<th>Profit %</th>
-									<th>Cost pre surcharge</th>
-									<th>Cost(GBP)</th>
-									<th data-defaultsort="desc">3rd party ref</th>
-									<th>Cost (EUR)</th>
+									<th data-datasort="Y" th:text="#{supplierinvoice.jobbookingdate.label}">Booking date</th>
+									<th th:text="#{supplierinvoice.jobhawb.label}">HAWB</th>
+									<th th:text="#{supplierinvoice.jobclient.label}">Client</th>
+									<th th:text="#{supplierinvoice.jobpickup.label}">Pickup</th>
+									<th th:text="#{supplierinvoice.jobdestination.label}">Destination</th>
+									<th th:text="#{supplierinvoice.jobweight.label}">Weight</th>
+									<th th:text="#{supplierinvoice.jobsalesprice.label}">Sale price (GBP)</th>
+									<th th:text="#{supplierinvoice.jobprofit.label}">Profit %</th>
+									<th th:text="#{supplierinvoice.jobcostpresurcharge.label}">Cost pre surcharge</th>
+									<th th:text="#{supplierinvoice.jobgbpcost.label}">Cost(GBP)</th>
+									<th data-defaultsort="desc" th:text="#{supplierinvoice.jobthirdpartyref.label}">3rd party ref</th>
+									<th th:text="#{supplierinvoice.jobeurcost.label}">Cost (EUR)</th>
 									<th>
-										<button id="reconcilecosts" class="btn btn-success pull-right">Reconcile
-											all</button>
+										<button id="reconcilecosts" class="btn btn-success pull-right" th:text="#{supplierinvoice.reconcileall.button}">Reconcile all</button>
 									</th>
 								</tr>
 							</thead>
@@ -83,15 +73,12 @@
 									<td><span>Cost(GBP)</span></td>
 									<td><span>3rd party ref</span></td>
 									<td><span>Cost (EUR)</span></td>
-									<td><span class="buttoncell">
-											<button class="btn confirmmatch">
-												<i class="icon icon-check"></i>
-											</button>
-											<button class="btn track" data-toggle="modal"
-												data-target="#invrecmodal">
-												<i class="icon icon-pencil"></i>
-											</button>
-									</span></td>
+									<td>
+										<span class="buttoncell">
+											<button class="btn confirmmatch"><i class="icon icon-check"></i></button>
+											<button class="btn track" data-toggle="modal" data-target="#invrecmodal"><i class="icon icon-pencil"></i></button>
+										</span>
+									</td>
 								</tr>
 								<tr class="success">
 									<td><span data-sort-value="20140108">08-Jan-2014</span></td>
@@ -106,15 +93,12 @@
 									<td><span>Cost(GBP)</span></td>
 									<td><span>3rd party ref</span></td>
 									<td><span>Cost (EUR)</span></td>
-									<td><span class="buttoncell">
-											<button class="btn confirmmatch">
-												<i class="icon icon-check"></i>
-											</button>
-											<button class="btn track" data-toggle="modal"
-												data-target="#invrecmodal">
-												<i class="icon icon-pencil"></i>
-											</button>
-									</span></td>
+									<td>
+										<span class="buttoncell">
+											<button class="btn confirmmatch"><i class="icon icon-check"></i></button>
+											<button class="btn track" data-toggle="modal" data-target="#invrecmodal"><i class="icon icon-pencil"></i></button>
+										</span>
+									</td>
 								</tr>
 							</tbody>
 							<tfoot>
@@ -140,72 +124,53 @@
 				<div class="tab-pane " id="errors">
 					<form class="form-horizontal">
 						<div class="control-group">
-							<label class="control-label">Search for additional jobs:
-							</label>
+							<label class="control-label" th:text="#{supplierinvoice.searchadditionaljobs.label}">Search for additional jobs:</label>
 							<div class="controls">
 								<div class="input-append">
 									<input id="additionaljobsearch" name="additionaljobsearch"
 										type="text" placeholder="Search" autocomplete="off"
 										class="typeahead input-large include"
-										data-search-settings="search2" data-required="required" /><span
-										class="add-on"><i class="icon-search"></i></span> <input
-										type="hidden" value="" name="additionaljobsearchKey"
-										class="typeahead-val" />
+										data-search-settings="search2" data-required="required" />
+									<span class="add-on"><i class="icon-search"></i></span> 
+									<input type="hidden" value="" name="additionaljobsearchKey" class="typeahead-val"/>
 								</div>
 							</div>
 						</div>
-						<table
-							class="datatabled table-condensed table table-striped invoicetables"
-							id="inverror" width="100%" data-fixright="3"
-							data-datatablescroll="Y">
+						<table class="datatabled table-condensed table table-striped invoicetables" id="inverror" width="100%" data-fixright="3" data-datatablescroll="Y">
 							<thead>
 								<tr>
-									<th data-datasort="Y">Booking date</th>
-									<th>HAWB</th>
-									<th>Client</th>
-									<th>Pickup</th>
-									<th>Destination</th>
-									<th>Weight</th>
-									<th>Sale price (GBP)</th>
-									<th>Profit %</th>
-									<th>Cost pre surcharge</th>
-									<th>Cost(GBP)</th>
-									<th data-defaultsort="desc">3rd party ref</th>
-									<th>Cost (EUR)</th>
+									<th data-datasort="Y" th:text="#{supplierinvoice.jobbookingdate.label}">Booking date</th>
+									<th th:text="#{supplierinvoice.jobhawb.label}">HAWB</th>
+									<th th:text="#{supplierinvoice.jobclient.label}">Client</th>
+									<th th:text="#{supplierinvoice.jobpickup.label}">Pickup</th>
+									<th th:text="#{supplierinvoice.jobdestination.label}">Destination</th>
+									<th th:text="#{supplierinvoice.jobweight.label}">Weight</th>
+									<th th:text="#{supplierinvoice.jobsalesprice.label}">Sale price (GBP)</th>
+									<th th:text="#{supplierinvoice.jobprofit.label}">Profit %</th>
+									<th th:text="#{supplierinvoice.jobcostpresurcharge.label}">Cost pre surcharge</th>
+									<th th:text="#{supplierinvoice.jobgbpcost.label}">Cost(GBP)</th>
+									<th data-defaultsort="desc" th:text="#{supplierinvoice.jobthirdpartyref.label}">3rd party ref</th>
+									<th th:text="#{supplierinvoice.jobeurcost.label}">Cost (EUR)</th>
 									<th>
-										<button class="btn btn-success pull-right">Select all
-										</button>
+										<button class="btn btn-success pull-right" th:text="#{supplierinvoice.selectall.button}">Select all</button>
 									</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr class="error">
-									<td><span class="errottablehighlight" data-sort-value="01">Job
-											not found</span></td>
-									<td><span class="errottablehighlight">Job not found</span>
-									</td>
-									<td><span class="errottablehighlight">Job not found</span>
-									</td>
-									<td><span class="errottablehighlight">Job not found</span>
-									</td>
-									<td><span class="errottablehighlight">Job not found</span>
-									</td>
-									<td><span class="errottablehighlight">Job not found</span>
-									</td>
-									<td><span class="errottablehighlight">Job not found</span>
-									</td>
-									<td><span class="errottablehighlight">Job not found</span>
-									</td>
-									<td><span class="errottablehighlight">Job not found</span>
-									</td>
-									<td><span class="errottablehighlight">Job not found</span>
-									</td>
-									<td><span>ABC000001 (On invoice)</span><span
-										class="errottablehighlight">Job not found</span></td>
-									<td><span>€123.45 (On invoice)</span><span
-										class="errottablehighlight">Job not found</span></td>
-									<td><span class="errottablehighlight">Job not found</span>
-									</td>
+									<td><span class="errottablehighlight" data-sort-value="01" th:text="#{supplierinvoice.nojobfound.error}">Job not found</span></td>
+									<td><span class="errottablehighlight">Job not found</span></td>
+									<td><span class="errottablehighlight">Job not found</span></td>
+									<td><span class="errottablehighlight">Job not found</span></td>
+									<td><span class="errottablehighlight">Job not found</span></td>
+									<td><span class="errottablehighlight">Job not found</span></td>
+									<td><span class="errottablehighlight">Job not found</span></td>
+									<td><span class="errottablehighlight">Job not found</span></td>
+									<td><span class="errottablehighlight">Job not found</span></td>
+									<td><span class="errottablehighlight">Job not found</span></td>
+									<td><span>ABC000001 (On invoice)</span><span class="errottablehighlight" th:text="#{supplierinvoice.nojobfound.error}">Job not found</span></td>
+									<td><span>€123.45 (On invoice)</span><span class="errottablehighlight" th:text="#{supplierinvoice.nojobfound.error}">Job not found</span></td>
+									<td><span class="errottablehighlight">Job not found</span></td>
 								</tr>
 								<tr>
 									<td><span data-sort-value="20140108">08-Jan-2014</span></td>
@@ -219,21 +184,16 @@
 									<td><span>Cost pre surcharge</span></td>
 									<td><span>Cost(GBP)</span></td>
 									<td><span>3rd party ref</span></td>
-									<td><span>€0.00</span><span class="errottablehighlight">No
-											costs found</span></td>
-									<td><span class="buttoncell">
-											<button class="btn confirmmatch">
-												<i class="icon icon-check"></i>
-											</button>
-											<button class="btn track" data-toggle="modal"
-												data-target="#invrecmodal">
-												<i class="icon icon-pencil"></i>
-											</button>
-									</span></td>
+									<td><span>€0.00</span><span class="errottablehighlight" th:text="#{supplierinvoice.nocostfound.error}">No costs found</span></td>
+									<td>
+										<span class="buttoncell">
+											<button class="btn confirmmatch"><i class="icon icon-check"></i></button>
+											<button class="btn track" data-toggle="modal" data-target="#invrecmodal"><i class="icon icon-pencil"></i></button>
+										</span>
+									</td>
 								</tr>
 								<tr>
-									<td><span data-sort-value="20140102">Tue,
-											02-Jan-2014</span></td>
+									<td><span data-sort-value="20140102">Tue,02-Jan-2014</span></td>
 									<td><span>HAWB</span></td>
 									<td><span>Client</span></td>
 									<td><span>Pickup</span></td>
@@ -244,17 +204,13 @@
 									<td><span>Cost pre surcharge</span></td>
 									<td><span>Cost(GBP)</span></td>
 									<td><span>3rd party ref</span></td>
-									<td><span>€20.00</span><span class="errottablehighlight">Costs
-											don't match</span></td>
-									<td><span class="buttoncell">
-											<button class="btn confirmmatch">
-												<i class="icon icon-check"></i>
-											</button>
-											<button class="btn track" data-toggle="modal"
-												data-target="#invrecmodal">
-												<i class="icon icon-pencil"></i>
-											</button>
-									</span></td>
+									<td><span>€20.00</span><span class="errottablehighlight" th:text="#{supplierinvoice.nocostmatch.error}">Costs don't match</span></td>
+									<td>
+										<span class="buttoncell">
+											<button class="btn confirmmatch"><i class="icon icon-check"></i></button>
+											<button class="btn track" data-toggle="modal" data-target="#invrecmodal"><i class="icon icon-pencil"></i></button>
+										</span>
+									</td>
 								</tr>
 							</tbody>
 							<tfoot>
@@ -279,10 +235,8 @@
 				</div>
 			</div>
 			<div class='pull-right pageconfirmbuttonholder'>
-				<button id="lockjobs" class="btn btn-primary pull-right">Lock
-					manifest</button>
-				<button id="downloadcsv" class="btn pull-right">Download as
-					CSV</button>
+				<button id="lockjobs" class="btn btn-primary pull-right" th:text="#{supplierinvoice.lockmanifest.button}">Lock manifest</button>
+				<button id="downloadcsv" class="btn pull-right" th:text="#{supplierinvoice.downloadascsv.button}">Download as	CSV</button>
 			</div>
 		</div>
 	</div>
@@ -299,6 +253,5 @@
                 });
             });
         });
-    </script>    
-	
+    </script>
 </section>

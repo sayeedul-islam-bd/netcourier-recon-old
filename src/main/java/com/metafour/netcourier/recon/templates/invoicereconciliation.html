@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Supplier Invoice Reconciliation</title>
+    <title th:text="#{supplierinvoice.page.title}">Supplier Invoice Reconciliation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="NetCourier Supplier Invoice Reconciliation" />
     <meta name="author" content="" />
@@ -36,10 +36,10 @@
             <div class="subnav-fixed subnav" id="subnavscroll">
                 <ul class="nav nav-pills">
                     <li>
-                    	<a href="#invoicedetails-section" th:text="#{supplierinvoice.details.label}">Invoice details</a>
+                    	<a href="#invoicedetails-section" th:text="#{supplierinvoice.sectioninvoicedetails.label}">Invoice details</a>
                     </li>
                     <li>
-                    	<a href="#invoicelines-section" th:text="#{supplierinvoice.outcome.label}">Reconciliation outcome</a>
+                    	<a href="#invoicelines-section" th:text="#{supplierinvoice.sectionoutcome.label}">Reconciliation outcome</a>
                     </li>
                 </ul>
             </div>
