@@ -89,6 +89,7 @@
 							<td><span th:text="${it.totalCostInCourierCurrency ne null ? #numbers.formatDecimal(it.totalCostInCourierCurrency,1,2) : '0.00'}">Cost(GBP)</span></td>
 							<td><span th:text="${it.tref}">3rd party ref</span></td>
 <<<<<<< Upstream, based on upstream/develop
+<<<<<<< Upstream, based on upstream/develop
 							<td><span>Cost (EUR)</span></td>
 							<td>
 								<span class="buttoncell">
@@ -110,6 +111,9 @@
 							<td><span>Cost(GBP)</span></td>
 							<td><span>3rd party ref</span></td>
 							<td><span>Cost (EUR)</span></td>
+=======
+							<td><span th:text="${it.totalCostInSupplierCurrency ne null ? #numbers.formatDecimal(it.totalCostInSupplierCurrency,1,2) : '0.00'}" >Cost (EUR)</span></td>
+>>>>>>> 2060a9d Display job list
 							<td>
 								<span class="buttoncell">
 									<button class="btn confirmmatch"><i class="icon icon-check"></i></button>
