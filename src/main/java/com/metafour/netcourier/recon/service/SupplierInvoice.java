@@ -27,8 +27,6 @@ public interface SupplierInvoice {
 	
 	public Map<String, SupplierInvoiceLine> getJobsForReconciliation(PurchaseInvoice purchaseInvoice) throws ReconcileInvoiceException;
 
-	public Map<String, SupplierInvoiceLine> getJobsForReconciliation(String supplierId, Date fromDate, Date toDate, Double surcharge) throws ReconcileInvoiceException;
-	
 	public Map<String, SupplierInvoiceLine> getReconciledJobs(PurchaseInvoice purchaseInvoice) throws ReconcileInvoiceException;
 
 	public Map<String, SupplierInvoiceLine> getReconciledJobs(String purchaseInvoiceId) throws ReconcileInvoiceException;

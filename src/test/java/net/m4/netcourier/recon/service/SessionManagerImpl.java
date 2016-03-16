@@ -1,7 +1,9 @@
 package net.m4.netcourier.recon.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.metafour.netcourier.model.NCSession;
 import com.metafour.netcourier.service.AbstractSessionManager;
@@ -11,9 +13,10 @@ import com.metafour.netcourier.service.ContactService;
 import com.metafour.netcourier.service.SessionManager;
 import com.metafour.orm.SessionFactory;
 
-@Service
+@Component
 public class SessionManagerImpl extends AbstractSessionManager implements SessionManager{
-	
+	private static final Logger logger = LoggerFactory.getLogger(SessionManagerImpl.class);
+
 	@Autowired
 	private AppConfig appConfig;
 
