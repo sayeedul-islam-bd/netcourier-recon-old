@@ -39,73 +39,6 @@
                   </div>
                </div>
             </div>
-            <div class="control-group" >
-               <label for="jobSearchMethod" class="control-label" th:text="#{supplierinvoice.jobsearchmethod.label}">Job search method:</label>
-               <div class="controls">
-                  <label class="radio">
-                  <input id="jobsearchmethodradiosinputfile" th:checked="${SEARCHTYPE eq 'INF'}" type="radio" value="INF" name="jobSearchMethod" data-clickchangepair="jobsearchmethodradiosinputfile" data-clickchangegroup="jobsearchmethodradios" class="include clickchangetrigger" />
-                  Input file
-                  </label>
-                  <label class="radio">
-                  <input id="jobsearchmethodradiosjobsearch" th:checked="${SEARCHTYPE eq 'JOS'}" type="radio" value="JOS" name="jobSearchMethod" data-clickchangepair="jobsearchmethodradiosjobsearch" data-clickchangegroup="jobsearchmethodradios" class="include clickchangetrigger" />
-                  Job search
-                  </label>
-               </div>
-            </div>
-         </fieldset>
-         <fieldset>
-            <div data-clickchangepair="jobsearchmethodradiosinputfile jobsearchmethodradiosscan" data-clickchangegroup="jobsearchmethodradios"
-               th:classappend="${SEARCHTYPE eq 'JOS'} ? 'nodisplay'">
-               <div class="control-group " >
-                  <label class="control-label" for="currupp" th:text="#{supplierinvoice.acceptableincrease.label}">Acceptable increase in costs:</label>
-                  <div class="controls">
-                     <div class="input-append inlineappends">
-                        <input th:field="*{exchangeRateUpperLimit}" type="text" name="currupp" class="include input-singlecharacter" data-vaild="positivenumber" />
-                     </div>
-                     <div class="input-append">
-                        <select id="curruppformat" name="curruppformat" class="input-singlecharacter include">
-                           <option value="%">%</option>
-                           <option value=""></option>
-                        </select>
-                     </div>
-                  </div>
-               </div>
-               <div class="control-group ">
-                  <label class="control-label" for="currlow" th:text="#{supplierinvoice.acceptabledecrease.label}">Acceptable decrease in costs:</label>
-                  <div class="controls">
-                     <div class="input-append inlineappends">
-                        <input th:field="*{exchangeRateLowerLimit}" id="currlow" type="text" name="currlow" class="include input-singlecharacter" data-vaild="positivenumber" />
-                     </div>
-                     <div class="input-append">
-                        <select id="currlowformat" name="currlowformat" class="input-singlecharacter include">
-                           <option value="%">%</option>
-                           <option value=""></option>
-                        </select>
-                     </div>
-                  </div>
-               </div>
-               <div class="control-group ">
-                  <label class="control-label" for="rejectForPod" th:text="#{supplierinvoice.podmatchjobs.label}">Only match jobs with a PoD?:</label>
-                  <div class="controls">
-                     <label class="checkbox">
-                     <input th:field="*{rejectForPod}" type="checkbox" value="Y" name="podreq" class="include" />
-                     </label>
-                  </div>
-               </div>
-               <div class="control-group">
-                  <label class="control-label" for="autoaddcosts" th:text="#{supplierinvoice.overwritecost.label}">Overwrite costs to match invoiced value?:</label>
-                  <div class="controls">
-                     <label class="checkbox">
-                     <input id="autoaddcosts" type="checkbox" value="Y" name="autoaddcosts" class="include" />
-                     </label>
-                  </div>
-               </div>
-            </div>
-         </fieldset>
-      </div>
-      <div class="span6" >
-         <div class="" data-clickchangepair="jobsearchmethodradiosjobsearch" data-clickchangegroup="jobsearchmethodradios" 
-            th:classappend="${SEARCHTYPE eq 'INF'} ? 'nodisplay'">
             <div class="control-group">
                <label class="control-label" for="firstJobDate" th:text="#{supplierinvoice.firstjobdate.label}">First job date:</label>
                <div class="controls">
@@ -136,92 +69,37 @@
                   </label>
                </div>
             </div>
-         </div>
-         <div data-clickchangepair="jobsearchmethodradiosinputfile jobsearchmethodradiosscan" data-clickchangegroup="jobsearchmethodradios"
-            th:classappend="${SEARCHTYPE eq 'JOS'} ? 'nodisplay'">
-            <fieldset>
-               <div class="alert alert-info nodisplay" id="postsupplieralert">
-                  <strong>Showing default mapping for Supplier A</strong>
-                  <br/> If you would like to update the default mapping for this supplier, click the "Save as default" button in this box. Otherwise we will treat this as a one off.<br/>
-                  <button type="button" id="reloadsupplierdefault" class="btn" th:text="#{supplierinvoice.reloaddefault.button}">Reload default</button>
-                  <button type="button" id="updatesupplierdefault" class="btn btn-info" th:text="#{supplierinvoice.saveasdefault.button}">Save as default</button>
-               </div>
-               <div class="control-group">
-                  <label for="trackingnocolumnstring" class="control-label" th:text="#{supplierinvoice.trackingnocolumnheader.label}">Tracking no. column header:</label>
-                  <div class="controls">
-                     <div class="input-append">
-                        <input type="text" class="include input-large" id="trackingnocolumnstring" name="trackingnocolumnstring" data-required="required" /><span class="add-on" data-toggle="tooltip" title="The text string in the header of the column containing the 3rd party tracking numbers.">
-                        <i class="icon-info-sign"></i>
-                        </span>
-                     </div>
-                  </div>
-               </div>
-               <div class="control-group">
-                  <label class="control-label" for="vertical" th:text="#{supplierinvoice.verticalformat.label}">Is it a vertical format?:</label>
-                  <div class="controls">
-                     <label class="checkbox">
-                     <input id="vertical" type="checkbox" value="Y" name="vertical" class="include checkboxcontrolled" />
-                     </label>
-                  </div>
-               </div>
-               <div class="nodisplay" data-toggledby="vertical">
-                  <fieldset>
-                     <div class="control-group">
-                        <label for="valuenocolumnstring" class="control-label" th:text="#{supplierinvoice.valuecolumnheader.label}">Value column header:</label>
-                        <div class="controls">
-                           <div class="input-append">
-                              <input type="text" class="include input-large" id="valuenocolumnstring" name="valuenocolumnstring" data-required="required" /><span class="add-on" data-toggle="tooltip" title="The text string in the header of the column containing the Net charge values.">
-                              <i class="icon-info-sign"></i>
-                              </span>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="control-group">
-                        <label for="descriptioncolumnstring" class="control-label" th:text="#{supplierinvoice.descriptioncolumnheader.label}">Description column header:</label>
-                        <div class="controls">
-                           <div class="input-append">
-                              <input type="text" class="include input-large" id="descriptioncolumnstring" name="descriptioncolumnstring" data-required="required" /><span class="add-on" data-toggle="tooltip" title="The text string in the header of the column which details which type of charge a row represents.">
-                              <i class="icon-info-sign"></i>
-                              </span>
-                           </div>
-                        </div>
-                     </div>
-                  </fieldset>
-                  <div class="alert alert-info">
-                     <strong>Don't worry about weight/basic charges</strong>
-                     <br /> We automatically identify these rows for you
-                  </div>
-               </div>
-               <div id="suppliermapping" class="nodisplay" data-us-horizontal="System column" data-them-horizontal="Invoice column" data-us-vertical="System charge name" data-them-vertical="Invoice charge name"></div>
-            </fieldset>
-         </div>
-      </div>
-      <div class="span12" data-clickchangepair="jobsearchmethodradiosinputfile jobsearchmethodradiosscan" data-clickchangegroup="jobsearchmethodradios"
-         th:classappend="${SEARCHTYPE eq 'JOS'} ? 'nodisplay'">
-         <fieldset>
             <div class="control-group">
-               <label class="control-label" th:text="#{supplierinvoice.filescheck.label}">Files to check:</label>
-               <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-               <div class="fileupload-buttonbar">
-                  <div class="">
-                     <!-- The fileinput-button span is used to style the file input field as button -->
-                     <div class="btn btn-success fileinput-button">
-                        <i class="icon-plus icon-white"></i> <span>Add files...</span>
-                        <input type="file" name="files[]" multiple="multiple" />
-                     </div>
-                     <span class="fileupload-loading"></span>
-                  </div>
+               <label class="control-label" for="surchargePercent">Surcharge %:</label>
+               <div class="controls">
+                   <input th:field="*{surchargePercent}" class="include input-small" type="text"/>
                </div>
-               <!-- The table listing the files available for upload/download -->
-               <table role="presentation" class="table table-striped">
-                  <tbody class="files"></tbody>
-               </table>
             </div>
          </fieldset>
       </div>
+      <div class="span6" >
+         <div class="" data-clickchangepair="jobsearchmethodradiosjobsearch" data-clickchangegroup="jobsearchmethodradios">
+            <div class="control-group">
+               <label class="control-label" for="netTotalInSupplierCurrency">Net total:</label>
+               <div class="controls">
+                   <input th:field="*{netTotalInSupplierCurrency}" class="include input-small" type="text"/>
+               </div>
+            </div>
+            <div class="control-group">
+               <label class="control-label" for="totalTaxInSupplierCurrency">Tax total:</label>
+               <div class="controls">
+                   <input th:field="*{totalTaxInSupplierCurrency}" class="include input-small money" type="text"/>
+               </div>
+            </div>
+         </div>
+      </div>
       <div class="span12">
          <fieldset>
-            <button type="button" id="btncreateinvoice" class="btn btn-primary pull-right" th:text="#{supplierinvoice.createinvoicebutton.label}">Create invoice</button>
+            <button type="button" id="btncreateinvoice" class="btn btn-success pull-right">Create invoice</button>
+            <button type="button" id="btnclose" class="btn btn-danger pull-right">Close invoice</button>
+            <button type="button" id="btnuploadfile" class="btn btn-primary pull pull-right">Reconcile file</button>
+            <button type="button" id="btnsearch" class="btn btn-primary pull-right">Search and Reconcile invoice</button>
+            
          </fieldset>
       </div>
    </div>
