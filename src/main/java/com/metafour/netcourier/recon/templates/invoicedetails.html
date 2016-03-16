@@ -10,7 +10,7 @@
            </div>
            
            <div class="row anything" th:if="${invalidId ne true}"
-           	th:with="SEARCHTYPE=${purchaseInvoice.jobSearchMethod ne null ? purchaseInvoice.jobSearchMethod + '' : 'INF'}">
+           		th:with="SEARCHTYPE=${purchaseInvoice.jobSearchMethod ne null ? purchaseInvoice.jobSearchMethod + '' : 'INF'}">
            	
                <div class="span6">
                    <fieldset>
@@ -22,8 +22,8 @@
                                    	data-required="required" th:placeholder="#{supplierinvoice.supplier.placeholder}"
                                    	th:value="${supplierCode ne null ? supplierCode : ''}" 
                                    	th:attr="data-search-url=@{/search/supplier/}"/><span class="add-on"><i class="icon-search"></i></span>
-					<input type="hidden" th:field="*{supplierId}" class="typeahead-val include"/>
-					<input type="hidden" id="supplierdesc" class="typeahead-desc include"/>
+									<input type="hidden" th:field="*{supplierId}" class="typeahead-val include"/>
+									<input type="hidden" id="supplierdesc" class="typeahead-desc include"/>
                                </div>
                            </div>
                        </div>

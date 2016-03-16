@@ -19,14 +19,27 @@ public class SupplierInvoiceLine {
 	
 	public Double weight;						// CS.CWGT - chargeable weight
 	public Double profit;
-	public Double costBeforeSurcharge;		
+	public Double costBeforeSurcharge;
 	public Double totalCostInCourierCurrency;
-	public Double totalCostInInvoiceCurrency;
+	public Double totalCostInSupplierCurrency;
 	public Double salesPrice;
 	
+	private boolean isReconciled;
 
 	public SupplierInvoiceLine() {	
 		super();
+	}
+
+	public boolean getIsReconciled() {
+		return isReconciled;
+	}
+	
+	public boolean isReconciled() {
+		return isReconciled;
+	}
+
+	public void setIsReconciled(boolean isReconciled) {
+		this.isReconciled = isReconciled;
 	}
 
 	public String getHawb() {
@@ -93,12 +106,12 @@ public class SupplierInvoiceLine {
 		this.totalCostInCourierCurrency = totalCostInCourierCurrency;
 	}
 
-	public Double getTotalCostInInvoiceCurrency() {
-		return totalCostInInvoiceCurrency;
+	public Double getTotalCostInSupplierCurrency() {
+		return totalCostInSupplierCurrency;
 	}
 
-	public void setTotalCostInInvoiceCurrency(Double totalCostInInvoiceCurrency) {
-		this.totalCostInInvoiceCurrency = totalCostInInvoiceCurrency;
+	public void setTotalCostInSupplierCurrency(Double totalCostInInvoiceCurrency) {
+		this.totalCostInSupplierCurrency = totalCostInInvoiceCurrency;
 	}
 
 	public String getJobId() {
@@ -139,7 +152,7 @@ public class SupplierInvoiceLine {
 				+ pickupFrom + ", deliveryTo=" + deliveryTo + ", client=" + client + ", bookingDate=" + bookingDate
 				+ ", weight=" + weight + ", profit=" + profit + ", surchargeCost=" + costBeforeSurcharge
 				+ ", totalCostInCourierCurrency=" + totalCostInCourierCurrency + ", totalCostInInvoiceCurrency="
-				+ totalCostInInvoiceCurrency + ", salesPrice=" + salesPrice + "]";
+				+ totalCostInSupplierCurrency + ", salesPrice=" + salesPrice + "]";
 	}
 
 
