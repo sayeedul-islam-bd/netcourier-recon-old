@@ -1,7 +1,7 @@
 <section id="invoicelines-section" class='' th:fragment="invoice-lines-section" xmlns:th="http://www.thymeleaf.org">
 	<div class="page-header sectionbartoggle" tabindex="0">
 		<h1>
-			<small><i class="icon-chevron-right"></i><span th:text="#{supplierinvoice.outcome.label}">Reconciliation outcome</span></small>
+			<small><i class="icon-chevron-down"></i><span th:text="#{supplierinvoice.outcome.label}">Reconciliation outcome</span></small>
 		</h1>
 	</div>
 	<div class="row anything">
@@ -40,19 +40,19 @@
 							<th th:text="#{supplierinvoice.jobdestination.label}">Destination</th>
 							<th th:text="#{supplierinvoice.jobweight.label}">Weight</th>
 							<th> 
-								<span th:text="#{supplierinvoice.jobsalesprice.label}">Sale price</span> 
-								<span th:text="#{supplierinvoice.jobsalespriceUnit.label}">(GBP)</span>
+								<span th:text="#{supplierinvoice.jobsalesprice.label}">Sale price</span><br/> 
+								(<span th:text="${curierCurrencyCode}">(GBP)</span>)
 							</th>
 							<th th:text="#{supplierinvoice.jobprofit.label}">Profit %</th>
 							<th th:text="#{supplierinvoice.jobcostpresurcharge.label}">Cost pre surcharge</th>
 							<th>
-								<span th:text="#{supplierinvoice.jobgbpcost.label}">Cost</span>
-								<span th:text="#{supplierinvoice.jobgbpcostUnit.label}">(GBP)</span>
+								<span th:text="#{supplierinvoice.jobgbpcost.label}">Cost</span><br/>
+								(<span th:text="${curierCurrencyCode}">(GBP)</span>)
 							</th>
 							<th data-defaultsort="desc" th:text="#{supplierinvoice.jobthirdpartyref.label}">3rd party ref</th>
 							<th> 
-								<span th:text="#{supplierinvoice.jobeurcost.label}">Cost</span> 
-								<span th:text="#{supplierinvoice.jobeurcostUnit.label}">(EUR)</span>
+								<span th:text="#{supplierinvoice.jobeurcost.label}">Cost</span><br/>
+								(<span th:text="${supplierCurrencyCode}">(EUR)</span>)
 							</th>
 							<th>
 								<button id="reconcilecosts" class="btn btn-success pull-right" th:text="#{supplierinvoice.reconcileall.button}">Reconcile all</button>
