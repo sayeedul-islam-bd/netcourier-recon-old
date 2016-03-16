@@ -39,12 +39,21 @@
 							<th th:text="#{supplierinvoice.jobpickup.label}">Pickup</th>
 							<th th:text="#{supplierinvoice.jobdestination.label}">Destination</th>
 							<th th:text="#{supplierinvoice.jobweight.label}">Weight</th>
-							<th th:text="#{supplierinvoice.jobsalesprice.label}">Sale price (GBP)</th>
+							<th> 
+								<span th:text="#{supplierinvoice.jobsalesprice.label}">Sale price</span> 
+								<span th:text="#{supplierinvoice.jobsalespriceUnit.label}">(GBP)</span>
+							</th>
 							<th th:text="#{supplierinvoice.jobprofit.label}">Profit %</th>
 							<th th:text="#{supplierinvoice.jobcostpresurcharge.label}">Cost pre surcharge</th>
-							<th th:text="#{supplierinvoice.jobgbpcost.label}">Cost(GBP)</th>
+							<th>
+								<span th:text="#{supplierinvoice.jobgbpcost.label}">Cost</span>
+								<span th:text="#{supplierinvoice.jobgbpcostUnit.label}">(GBP)</span>
+							</th>
 							<th data-defaultsort="desc" th:text="#{supplierinvoice.jobthirdpartyref.label}">3rd party ref</th>
-							<th th:text="#{supplierinvoice.jobeurcost.label}">Cost (EUR)</th>
+							<th> 
+								<span th:text="#{supplierinvoice.jobeurcost.label}">Cost</span> 
+								<span th:text="#{supplierinvoice.jobeurcostUnit.label}">(EUR)</span>
+							</th>
 							<th>
 								<button id="reconcilecosts" class="btn btn-success pull-right" th:text="#{supplierinvoice.reconcileall.button}">Reconcile all</button>
 							</th>
