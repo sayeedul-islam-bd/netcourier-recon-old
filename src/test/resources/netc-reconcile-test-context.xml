@@ -2,34 +2,33 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:jee="http://www.springframework.org/schema/jee"
 	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
-        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+	<import resource="activemq-client.xml"/>
+	<tx:annotation-driven />
+	<!-- http://stackoverflow.com/questions/3403773/using-multiple-property-files-via-propertyplaceholderconfigurer-in-multiple-pr -->
 	<context:property-placeholder location="classpath:netc.properties" ignore-unresolvable="true" ignore-resource-not-found="true" />
-	
-	<context:component-scan base-package="com.metafour.netcourier.service" />
-	<!-- <context:component-scan base-package="com.metafour.netcourier.service.impl" /> -->
-	<context:component-scan base-package="net.m4.netcourier.recon.service" />	
-	
-	<bean class="net.m4.netcourier.recon.service.SessionManagerImpl" />
-	
-	<bean id="appConfig" class="com.metafour.netcourier.service.AppConfig" factory-method="getInstance" />
-	<bean class="com.metafour.netcourier.service.ListService" />
-	<bean class="com.metafour.netcourier.service.NumberSeriesService" />
-	<bean class="com.metafour.netcourier.service.impl.BookingServiceImpl" />
-	<bean class="com.metafour.netcourier.service.impl.ClientServiceImpl" />
-	<bean class="com.metafour.netcourier.service.impl.ContactServiceImpl" />
-	<bean class="com.metafour.netcourier.service.impl.CurrencyServiceImpl" />
-	<bean class="com.metafour.netcourier.service.impl.JobImportServiceImpl" />
-<!-- 	<bean class="com.metafour.netcourier.exchange.LoginServiceXImpl" /> -->
-	<bean class="com.metafour.netcourier.service.impl.PricingServiceImpl" />
-	<bean class="com.metafour.netcourier.service.impl.ProfileServiceImpl" />
-	<bean class="com.metafour.netcourier.service.impl.SearchSuggestServiceImpl" />
-	<bean class="com.metafour.netcourier.service.impl.TrackServiceImpl" />
 
+	<context:component-scan base-package="com.metafour.netcourier.service" />
+	<context:component-scan base-package="com.metafour.netcourier.service.impl" />
+	<context:component-scan base-package="com.metafour.netcourier.validation" />
+	<context:component-scan base-package="com.metafour.netcourier.recon.service" />
+	<context:component-scan base-package="com.metafour.netcourier.recon.service.impl" />
+
+	<bean id="appConfig" class="com.metafour.netcourier.service.AppConfig" factory-method="getInstance" />
+	<bean class="net.m4.netcourier.recon.service.SessionManagerImpl" />
+	<bean id="addressService" class="com.metafour.netcourier.service.impl.AddressServiceImpl" />
+	<bean id="pafService" class="com.metafour.netcourier.service.impl.PafServiceImpl"></bean>
+	<bean id="invoiceService" class="com.metafour.netcourier.recon.service.impl.SupplierInvoiceImpl"></bean>
+
+	<jee:jndi-lookup id="jndiDS" jndi-name="java:comp/env/jdbc/pgDS" />
+	
 	<bean id="keyMap" class="com.metafour.orm.pgsql.PgKeymap">
 		<constructor-arg value="classpath:orm-config-netc.xml" type="java.io.InputStream" />
 	</bean>
@@ -40,12 +39,48 @@
 				<prop key="com.metafour.orm.modelbuilder.pkg">com.metafour.netcourier.model.mfsql</prop>
 			</util:properties>
 		</constructor-arg>
-		<property name="dataSource">
-			<jee:jndi-lookup jndi-name="java:comp/env/jdbc/pgDS" />
-		</property>
+		<property name="dataSource" ref="jndiDS" />
 		<property name="keyMap" ref="keyMap" />
 		<property name="formatter">
 			<bean class="com.metafour.orm.pgsql.PgFormatter" />
+		</property>
+	</bean>
+	
+	<!-- JPA -->
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" primary="true">
+		<property name="persistenceUnitName" value="netcourierPU" />
+		<property name="jpaVendorAdapter" ref="jpaVendorEclipselink" />
+		<property name="dataSource" ref="jndiDS" />
+		<property name="packagesToScan">
+			<array>
+				<value>com.metafour.orm.jpa</value>
+				<value>com.metafour.netcourier.model</value>
+				<value>com.metafour.netcourier.model.conv</value>
+			</array>
+		</property>
+		<property name="jpaPropertyMap">
+			<map>
+				<entry key="exclude-unlisted-classes" value="false" />
+				<entry key="eclipselink.weaving" value="false" />
+			</map>
+		</property>
+	</bean>
+	<bean id="jpaVendorEclipselink" class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">
+		<property name="showSql" value="true" />
+		<property name="generateDdl" value="true" />
+		<property name="database" value="POSTGRESQL" />
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager" primary="true">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<property name="scopes">
+			<map>
+				<entry key="request" value="org.springframework.context.support.SimpleThreadScope" />
+				<entry key="session" value="org.springframework.context.support.SimpleThreadScope" />
+			</map>
 		</property>
 	</bean>
 
@@ -57,4 +92,9 @@
 			</map>
 		</property>
 	</bean>
+	
+<!-- 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/> -->
+
+<!-- 	<bean id="velocityEngine" class="org.springframework.security.saml.util.VelocityFactory" factory-method="getEngine"/> -->
+	
 </beans>

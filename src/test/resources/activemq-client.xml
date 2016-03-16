@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- http://activemq.apache.org/how-do-i-embed-a-broker-inside-a-connection.html -->
+	<!-- http://activemq.apache.org/spring-support.html -->
+	<!-- https://github.com/imtiaz-m4/spring-integration-samples/blob/master/applications/cafe/src/main/resources/META-INF/spring/integration/cafeDemo-xml.xml -->
+
+	<bean id="amqFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="tcp://192.168.0.202:61616" />
+		<property name="userName" value="imtiaz" />
+		<property name="password" value="rahi123" />
+	</bean>
+
+	<bean id="jobBookingMQ" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="q.ncjobs" />
+	</bean>
+	<bean id="jobBatchMQ" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="q.ncbatch" />
+	</bean>
+
+	<bean id="jms" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="amqFactory" />
+	</bean>
+	<bean id="jobBookingQueue" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="amqFactory" />
+		<property name="defaultDestination" ref="jobBookingMQ" />
+	</bean>
+</beans>

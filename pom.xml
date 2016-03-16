@@ -21,32 +21,6 @@
 			<groupId>com.metafour</groupId>
 			<artifactId>netcourier-api</artifactId>
 			<version>${netcourier-api.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>metafour-email</artifactId>
-					<groupId>com.metafour</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>dx-addresslookup-stub</artifactId>
-					<groupId>com.metafour</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jersey-client</artifactId>
-					<groupId>org.glassfish.jersey.core</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>google-maps-services</artifactId>
-					<groupId>com.google.maps</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>activemq-spring</artifactId>
-					<groupId>org.apache.activemq</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-jms</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -66,7 +40,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<scope>provided</scope>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
