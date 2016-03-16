@@ -1,4 +1,5 @@
 [15-Mar-2016]
+* [MMR] Added utility functions to process file based supplier invoice
 * [SI] Added cost details modal template
 
 [14-Mar-2016]
