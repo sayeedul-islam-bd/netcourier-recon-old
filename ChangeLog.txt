@@ -1,3 +1,6 @@
+[15-Mar-2016]
+* [MMR] Added utility functions to process file based supplier invoice
+
 [14-Mar-2016]
 * [SI] Reconcile/unreconcile job cost line
 
