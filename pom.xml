@@ -9,7 +9,7 @@
 	<properties>
 		<skipTests>true</skipTests>
 		<spring.version>4.2.4.RELEASE</spring.version>
-		<netcourier-api.version>1.8.1-SNAPSHOT</netcourier-api.version>
+		<netcourier-api.version>1.8.2-SNAPSHOT</netcourier-api.version>
 	</properties>
 
 	<dependencies>
@@ -48,6 +48,13 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.1</version>
+		</dependency>
+
 
 		<!-- Test -->
 		<dependency>
