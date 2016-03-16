@@ -33,7 +33,6 @@
 				<table border="1" class="datatabled table-condensed table table-striped invoicetables" id="invoicejobs" width="100%" data-datatablescroll="Y" data-fixright="3">
 					<thead>
 						<tr>
-<<<<<<< Upstream, based on upstream/develop
 							<th data-datasort="Y" th:text="#{supplierinvoice.jobbookingdate.label}">Booking date</th>
 							<th th:text="#{supplierinvoice.jobhawb.label}">HAWB</th>
 							<th th:text="#{supplierinvoice.jobclient.label}">Client</th>
@@ -46,20 +45,6 @@
 							</th>
 							<th th:text="#{supplierinvoice.jobprofit.label}">Profit %</th>
 							<th th:text="#{supplierinvoice.jobcostpresurcharge.label}">Cost pre surcharge</th>
-=======
-							<th class="sorting_desc" data-datasort="Y">Booking date</th>
-							<th>HAWB</th>
-							<th>Client</th>
-							<th>Pickup</th>
-							<th>Destination</th>
-							<th>Weight</th>
-							<th>Sale price (GBP)</th>
-							<th>Profit %</th>
-							<th>Cost pre surcharge</th>
-							<th>Cost (GBP)</th>
-							<th data-defaultsort="desc">3rd party ref</th>
-							<th>Cost (EUR)</th>
->>>>>>> f5251bc Display job list
 							<th>
 								<span th:text="#{supplierinvoice.jobgbpcost.label}">Cost</span>
 								<span th:text="#{supplierinvoice.jobgbpcostUnit.label}">(GBP)</span>
@@ -88,50 +73,13 @@
 							<td><span th:text="${it.costBeforeSurcharge ne null ? #numbers.formatDecimal(it.costBeforeSurcharge,1,2) : '0.00'}">Cost pre surcharge</span></td>
 							<td><span th:text="${it.totalCostInCourierCurrency ne null ? #numbers.formatDecimal(it.totalCostInCourierCurrency,1,2) : '0.00'}">Cost(GBP)</span></td>
 							<td><span th:text="${it.tref}">3rd party ref</span></td>
-<<<<<<< Upstream, based on upstream/develop
-<<<<<<< Upstream, based on upstream/develop
-							<td><span>Cost (EUR)</span></td>
+							<td><span th:text="${it.totalCostInSupplierCurrency ne null ? #numbers.formatDecimal(it.totalCostInSupplierCurrency,1,2) : '0.00'}" >Cost (EUR)</span></td>
 							<td>
 								<span class="buttoncell">
 									<button class="btn confirmmatch"><i class="icon icon-check"></i></button>
 									<button class="btn track" data-toggle="modal" data-target="#invrecmodal"><i class="icon icon-pencil"></i></button>
 								</span>
 							</td>
-						</tr>
-						<tr th:remove="all">
-							<td><span data-sort-value="20140108">08-Jan-2014</span></td>
-							<td><span>HAWB</span></td>
-							<td><span>Client</span></td>
-							<td><span>Pickup</span></td>
-							<td><span>Destination</span></td>
-							<td><span>Weight</span></td>
-							<td><span>Sale price (GBP)</span></td>
-							<td><span>Profit %</span></td>
-							<td><span>Cost pre surcharge</span></td>
-							<td><span>Cost(GBP)</span></td>
-							<td><span>3rd party ref</span></td>
-							<td><span>Cost (EUR)</span></td>
-=======
-							<td><span th:text="${it.totalCostInSupplierCurrency ne null ? #numbers.formatDecimal(it.totalCostInSupplierCurrency,1,2) : '0.00'}" >Cost (EUR)</span></td>
->>>>>>> 2060a9d Display job list
-							<td>
-								<span class="buttoncell">
-									<button class="btn confirmmatch"><i class="icon icon-check"></i></button>
-									<button class="btn track" data-toggle="modal" data-target="#invrecmodal"><i class="icon icon-pencil"></i></button>
-								</span>
-							</td>
-=======
-							<td><span th:text="${it.totalCostInSupplierCurrency ne null ? #numbers.formatDecimal(it.totalCostInSupplierCurrency,1,2) : '0.00'}" >Cost (EUR)</span></td>
-							<td><span class="buttoncell">
-									<button class="btn confirmmatch">
-										<i class="icon icon-check"></i>
-									</button>
-									<button class="btn track" data-toggle="modal"
-										data-target="#invrecmodal">
-										<i class="icon icon-pencil"></i>
-									</button>
-							</span></td>
->>>>>>> f5251bc Display job list
 						</tr>
 					</tbody>
 					<tfoot>
